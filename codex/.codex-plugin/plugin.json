@@ -1,0 +1,25 @@
+{
+  "name": "newb",
+  "version": "0.1.0",
+  "description": "Talk to your newbs from Codex. Auto-discovers every newb you have access to.",
+  "author": {
+    "name": "newb.works",
+    "url": "https://newb.works"
+  },
+  "homepage": "https://newb.works",
+  "repository": "https://github.com/newbworks/newb-plugins",
+  "license": "MIT",
+  "keywords": ["newb", "agent", "mcp", "personal-assistant"],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "newb",
+    "shortDescription": "Talk to your newbs from Codex.",
+    "longDescription": "One install, all your newbs. Sign in once with Google; every newb you have access to (owned or shared) shows up automatically as MCP tools under `mcp__newb__delegate_start__<slug>`, `mcp__newb__describe__<slug>`, etc. Tokens are stored in Codex's secure storage — no per-newb bearer secrets to manage.",
+    "developerName": "newb.works",
+    "category": "Agent",
+    "websiteURL": "https://newb.works",
+    "composerIcon": "./assets/composer-icon.png",
+    "logo": "./assets/logo.png"
+  }
+}

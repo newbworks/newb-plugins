@@ -1,0 +1,21 @@
+{
+  "name": "newb",
+  "interface": {
+    "displayName": "newb.works"
+  },
+  "plugins": [
+    {
+      "name": "newb",
+      "source": {
+        "source": "local",
+        "path": "./codex"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Agent",
+      "description": "Talk to your newbs from Codex. Auto-discovers every newb you have access to."
+    }
+  ]
+}

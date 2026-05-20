@@ -1,0 +1,14 @@
+{
+  "name": "newb",
+  "displayName": "newb",
+  "version": "0.1.0",
+  "description": "Talk to your newbs from Claude Code. Auto-discovers every newb you have access to.",
+  "author": {
+    "name": "newb.works",
+    "url": "https://newb.works"
+  },
+  "homepage": "https://newb.works",
+  "repository": "https://github.com/newbworks/newb-plugins",
+  "license": "MIT",
+  "keywords": ["newb", "agent", "mcp", "personal-assistant"]
+}

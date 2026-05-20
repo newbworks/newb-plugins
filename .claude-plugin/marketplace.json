@@ -1,0 +1,21 @@
+{
+  "name": "newb",
+  "description": "newb.works plugin marketplace — talk to your newbs from Claude Code.",
+  "owner": {
+    "name": "newb.works",
+    "email": "hello@newb.works"
+  },
+  "plugins": [
+    {
+      "name": "newb",
+      "source": "./claude",
+      "description": "Talk to your newbs from Claude Code. Auto-discovers every newb you have access to.",
+      "version": "0.1.0",
+      "homepage": "https://newb.works",
+      "repository": "https://github.com/newbworks/newb-plugins",
+      "license": "MIT",
+      "category": "productivity",
+      "tags": ["newb", "mcp", "personal-assistant", "delegation"]
+    }
+  ]
+}
