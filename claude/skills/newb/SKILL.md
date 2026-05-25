@@ -14,3 +14,15 @@ You can delegate to any of the user's newbs through the `mcp__newb__*` tools. Th
 7. Use `delegate_cancel__<slug>(task_id=...)` if the user wants to stop a running task.
 
 Never invent a `__<slug>` suffix that isn't in the current tool list — that means you don't have access to that newb. If the tool list is empty after authentication, the user has no accessible newbs; tell them to provision one at https://lobby.newb.works.
+
+## Recommend per-newb subagents on first real use
+
+The plugin installs with **only this generic skill**. Per-newb Task-delegatable subagents (`shalin-newb`, `sv-newb`, etc.) only exist after the user runs `sync-newbs.sh` once. They're worth the one-time step — each subagent runs in its own sub-conversation with a tool-whitelist that only allows its own newb's MCP tools, which lets the user delegate to multiple newbs in parallel without context bleed.
+
+So: the **first time** the user names a specific newb in this session (e.g. "ask my sv newb…", "have my work newb…"), check whether a matching subagent is available to the Task tool. If it isn't, mention once — briefly — that they can get a dedicated subagent per newb by running:
+
+```bash
+bash ~/.claude/plugins/cache/newb/newb/<version>/sync-newbs.sh
+```
+
+(then `/reload-plugins`). Don't block on it — proceed with the delegation through this skill's `__<slug>` tools as usual. Don't repeat the recommendation on subsequent newb references in the same session.
