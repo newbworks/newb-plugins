@@ -194,13 +194,26 @@ name: {m}
 description: Delegate to {name}. {desc} Use when the user names {name} explicitly (e.g. "ask my {name}..."), or for tasks that match the systems/memory this newb owns.
 ---
 
-Delegate the user's request to **{name}** ({role}).
+You are a **dumb pipe** to **{name}** ({role}) — an autonomous newb that runs on its own remote VM, with its own memory, agent, and connected systems. {name} handles all reasoning, scoping, clarification, refusal, and execution. Your job is to forward the user's request verbatim and stream the response back. Nothing more.
 
-1. Call `mcp__newb__delegate_start__{slug}` with the user's message as the `prompt` argument. It returns a `task_id`.
-2. Poll `mcp__newb__delegate_status__{slug}` with that `task_id` until the state is terminal (done / failed / cancelled). **Always pass `wait_seconds: 30`** — the gateway will block server-side until the task changes state or 30s elapses, so each poll is one round trip instead of dozens. Surface intermediate output as it arrives.
-3. If `delegate_status` returns `state: "input-required"` with a `planning_questions` array, gather the user's answers and call `mcp__newb__delegate_continue__{slug}` with `task_id` + `answers` (an array of strings, **in the same order as the questions**, 1–5 entries, short sentences).
-4. If the user wants to stop, call `mcp__newb__delegate_cancel__{slug}`.
-5. To re-check what {name} is connected to, call `mcp__newb__describe__{slug}`.
+## Forward the user's message VERBATIM
+
+The `prompt` argument to `delegate_start` is the user's message **as they typed it**. Do not:
+
+- Add the current workspace path, current file, current directory, repo root, or any other Codex-side environment context. The newb runs on a remote VM and cannot see your filesystem; injecting "the workspace is /Users/..." only confuses its tool selection (e.g. it'll reach for a code-sandbox tool when a higher-level builder would have been the right call).
+- Rephrase, summarize, or expand the user's request. If they were terse, stay terse.
+- Inject style hints ("please create a polished, usable ..."), framing ("using existing structure/assets if present"), or success criteria ("report what you built and how to run it"). The newb already knows what good output looks like; edits skew its tool selection.
+- Add `Context:` or `System:` prefixes. If you legitimately need to pass extra environment context, use the optional `context` parameter — never glue it into `prompt`.
+
+If the user types "$«{m}» build me a maid website", the prompt should be exactly `build me a maid website`. Not `Build me a maid website. The workspace is /Users/foo/bar. Please create a polished, usable website using existing assets...`.
+
+## Workflow
+
+1. `mcp__newb__delegate_start__{slug}` with `prompt` = the user's verbatim message → returns `task_id`.
+2. `mcp__newb__delegate_status__{slug}` with `task_id` AND `wait_seconds: 30` — the gateway long-polls server-side, so one tool call covers ~30s of progress. Loop until state is terminal (done / failed / cancelled). Surface intermediate output as it arrives.
+3. If `state: "input-required"` with `planning_questions`, gather the user's answers and call `mcp__newb__delegate_continue__{slug}` with `task_id` + `answers` (string array, same order as the questions, 1–5 entries, short sentences).
+4. If the user wants to stop, `mcp__newb__delegate_cancel__{slug}`.
+5. To inspect {name}'s connected systems, `mcp__newb__describe__{slug}`.
 
 Do not call tools for other newbs (e.g. `__other_slug`). If the user is asking about a different newb, decline and tell them to use the matching `$<slug>` skill or `$newb` to pick.
 """)

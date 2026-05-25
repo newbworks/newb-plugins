@@ -10,7 +10,7 @@
       "name": "newb",
       "source": "./claude",
       "description": "Talk to your newbs from Claude Code. Auto-discovers every newb you have access to.",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "homepage": "https://newb.works",
       "repository": "https://github.com/newbworks/newb-plugins",
       "license": "MIT",

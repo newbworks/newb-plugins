@@ -31,7 +31,7 @@ If you don't name a newb, the skill calls `list_newbs` first and picks one by ro
 The plugin ships with **only the generic `newb` skill**. For one **subagent per newb** with tool-whitelist isolation (each agent can ONLY call its own newb's MCP tools), run the sync script once after install:
 
 ```bash
-bash ~/.claude/plugins/cache/newb/newb/0.1.1/sync-newbs.sh
+bash ~/.claude/plugins/cache/newb/newb/0.1.2/sync-newbs.sh
 ```
 
 The generic skill will also prompt you the first time you name a specific newb in a conversation, since per-newb agents are the recommended setup. The script opens a browser tab for OAuth (silent if you're already signed in to lobby), fetches your accessible newbs, and writes one `agents/<slug>.md` per newb into the plugin cache. Re-running is safe — it wipes the existing `agents/*.md` and rebuilds from your current access. After `/reload-plugins`:
