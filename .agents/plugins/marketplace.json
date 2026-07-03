@@ -29,6 +29,19 @@
       },
       "category": "Developer Tools",
       "description": "Build and publish your own expert agent to the newb marketplace."
+    },
+    {
+      "name": "recruiting-copilot",
+      "source": {
+        "source": "local",
+        "path": "./recruiting-copilot-codex"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Career",
+      "description": "Finds a candidate's standout edge, targets fitting roles, tailors their resume, and drafts recruiter outreach."
     }
   ]
 }
