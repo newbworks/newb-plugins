@@ -1,18 +1,27 @@
 {
   "name": "newb-builder",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Build and publish your own expert agent to the newb marketplace.",
-  "author": { "name": "newb.works", "url": "https://newb.works" },
+  "author": {
+    "name": "newb.works",
+    "url": "https://newb.works"
+  },
   "homepage": "https://newb.works",
   "repository": "https://github.com/newbworks/newb-plugins",
   "license": "MIT",
-  "keywords": ["newb", "agent", "marketplace", "builder", "publish"],
+  "keywords": [
+    "newb",
+    "agent",
+    "marketplace",
+    "builder",
+    "publish"
+  ],
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "newb builder",
     "shortDescription": "Build & publish an expert agent to the newb marketplace.",
-    "longDescription": "Turn your domain expertise into a hosted agent that others can install. The builder interviews you, scaffolds a bundle, helps you write the agent's instructions, validates it, and publishes it live — where it runs server-side and anyone can pull it into Claude or Codex with free credits.",
+    "longDescription": "Turn your domain expertise into a hosted agent that others can install. The builder interviews you, scaffolds a bundle, helps you write the agent's instructions, validates it, and publishes it live \u2014 where it runs server-side and anyone can pull it into Claude or Codex with free credits.",
     "developerName": "newb.works",
     "category": "Developer Tools",
     "websiteURL": "https://newb.works",

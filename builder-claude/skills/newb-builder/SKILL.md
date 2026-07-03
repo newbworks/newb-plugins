@@ -45,15 +45,21 @@ An agent is a **bundle**: `SKILL.md` (its instructions/system prompt),
 6. **Validate:** `python3 scripts/validate_agent.py ./agents/<name>`
    Fix anything it reports; it prints the A2A Agent Card consumers will see.
 
-## Publish (runs hosted, pullable by anyone)
+## Publish = stage, then configure to go live
 
-`python3 scripts/publish_agent.py ./agents/<name> --configure-platform`
+`python3 scripts/publish_agent.py ./agents/<name>`
 
-This tars the bundle, uploads it to the hosted executor, installs it, and (with
-`--configure-platform`) points it at the platform LLM so it runs immediately.
-It prints the agent's hosted MCP endpoint `<host>/mcp/<slug>` — pull that into
-Claude or Codex to use the agent. Drop `--configure-platform` if the expert
-will bring their own LLM key/model on the newb configure page instead.
+This **stages** the agent (uploads it — *not live yet*) and prints a **configure
+link**. Give that link to the expert: it opens a page where they set the display
+name, the LLM (platform or their own key), and any **MCP credentials** the agent's
+tools need (the `${ENV_VAR}` placeholders from its `.mcp.json`, e.g. an API key).
+**Submitting that page is what publishes it** — only then is it live at
+`<host>/mcp/<slug>` and listed in the catalog. Until then it stays staged (hidden,
+not runnable).
+
+Do not report `publish` as "done" — the expert must finish on the configure page.
+(`--configure-platform` exists only for quick testing; it skips the page and
+publishes on the platform LLM.)
 
 ## Rules
 

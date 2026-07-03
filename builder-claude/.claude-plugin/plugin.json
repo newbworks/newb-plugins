@@ -1,11 +1,20 @@
 {
   "name": "newb-builder",
   "displayName": "newb builder",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Build and publish your own expert agent to the newb marketplace.",
-  "author": { "name": "newb.works", "url": "https://newb.works" },
+  "author": {
+    "name": "newb.works",
+    "url": "https://newb.works"
+  },
   "homepage": "https://newb.works",
   "repository": "https://github.com/newbworks/newb-plugins",
   "license": "MIT",
-  "keywords": ["newb", "agent", "marketplace", "builder", "publish"]
+  "keywords": [
+    "newb",
+    "agent",
+    "marketplace",
+    "builder",
+    "publish"
+  ]
 }
