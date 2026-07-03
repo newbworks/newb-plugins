@@ -16,6 +16,19 @@
       },
       "category": "Agent",
       "description": "Talk to your newbs from Codex. Auto-discovers every newb you have access to."
+    },
+    {
+      "name": "newb-builder",
+      "source": {
+        "source": "local",
+        "path": "./builder-codex"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools",
+      "description": "Build and publish your own expert agent to the newb marketplace."
     }
   ]
 }

@@ -52,3 +52,20 @@ Then trigger any `mcp__newb__*` call. Claude will prompt for OAuth on first use.
 ## Issues
 
 Report issues at https://github.com/newbworks/newb-plugins/issues.
+
+## newb-builder — for experts
+
+This marketplace also ships **`newb-builder`**, a plugin that lets a domain
+expert turn their expertise into a hosted agent others can install:
+
+```bash
+codex plugin marketplace add newbworks/newb-plugins    # Codex — then install: newb-builder
+/plugin marketplace add newbworks/newb-plugins          # Claude Code
+```
+
+Install `newb-builder`, then say *"build my agent"*. It interviews you,
+scaffolds a bundle, helps you write the instructions, validates, and publishes
+it live (self-contained Python scripts under `builder-*/scripts/` — no CLI or
+repo needed). Published agents run **hosted** and are pullable into Claude or
+Codex with free credits. Packages: `builder-codex/` (Codex) and
+`builder-claude/` (Claude Code).
