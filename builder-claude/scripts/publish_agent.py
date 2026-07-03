@@ -22,6 +22,7 @@ import urllib.request
 from pathlib import Path
 
 DEFAULT_HOST = "https://46-224-211-61.sslip.io"
+DEFAULT_CONFIGURE_BASE = "https://lobby.newb.works"
 
 
 def _post(url: str, data: bytes, content_type: str) -> dict:
@@ -42,6 +43,8 @@ def main() -> None:
     ap = argparse.ArgumentParser(description="Stage a bundle on the newb marketplace.")
     ap.add_argument("bundle_dir", help="path to the agent bundle directory")
     ap.add_argument("--host", default=DEFAULT_HOST, help="marketplace host (default: hosted executor)")
+    ap.add_argument("--configure-base", default=DEFAULT_CONFIGURE_BASE,
+                    help="lobby base URL for the configure page (default: lobby.newb.works)")
     ap.add_argument(
         "--configure-platform",
         action="store_true",
@@ -62,7 +65,7 @@ def main() -> None:
 
     host = args.host.rstrip("/")
     result = _post(f"{host}/agents", buf.getvalue(), "application/gzip")
-    configure_url = f"{host}/agents/{slug}/configure"
+    configure_url = f"{args.configure_base.rstrip('/')}/marketplace/experts/agents/{slug}/configure"
     print(f"✓ staged '{slug}'  ->  {json.dumps(result)}")
 
     if args.configure_platform:
@@ -73,8 +76,8 @@ def main() -> None:
         return
 
     print("\n  It is STAGED, not live yet.")
-    print("  Open the configure page to publish it — set the name, LLM, and any")
-    print("  MCP credentials, then submit. That makes it live:")
+    print("  Open the configure page to publish it — sign in, set the name, LLM,")
+    print("  and any MCP credentials, then submit. That makes it live:")
     print(f"\n    {configure_url}\n")
 
 

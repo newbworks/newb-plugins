@@ -50,9 +50,9 @@ An agent is a **bundle**: `SKILL.md` (its instructions/system prompt),
 `python3 scripts/publish_agent.py ./agents/<name>`
 
 This **stages** the agent (uploads it — *not live yet*) and prints a **configure
-link**. Give that link to the expert: it opens a page where they set the display
-name, the LLM (platform or their own key), and any **MCP credentials** the agent's
-tools need (the `${ENV_VAR}` placeholders from its `.mcp.json`, e.g. an API key).
+link** on newb.works. Give that link to the expert: it opens the newb configure
+page (they sign in) where they set the display name, the LLM (platform or their
+own key), and any **MCP credentials** the agent's tools need (e.g. an API key).
 **Submitting that page is what publishes it** — only then is it live at
 `<host>/mcp/<slug>` and listed in the catalog. Until then it stays staged (hidden,
 not runnable).
