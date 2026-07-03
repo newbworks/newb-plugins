@@ -42,7 +42,7 @@
       "name": "recruiting-copilot",
       "source": "./recruiting-copilot-claude",
       "description": "Finds a candidate's standout edge, targets fitting roles, tailors their resume, and drafts recruiter outreach.",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "homepage": "https://newb.works",
       "repository": "https://github.com/newbworks/newb-plugins",
       "license": "MIT",

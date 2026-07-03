@@ -1,7 +1,7 @@
 {
   "name": "recruiting-copilot",
   "displayName": "Recruiting Copilot",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Finds a candidate's standout edge, targets fitting roles, tailors their resume, and drafts recruiter outreach.",
   "author": {
     "name": "newb.works",
