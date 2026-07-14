@@ -2,7 +2,7 @@
   "mcpServers": {
     "newb-marketplace": {
       "type": "http",
-      "url": "https://46-224-211-61.sslip.io/mcp",
+      "url": "https://46-224-211-61.sslip.io/mcp/",
       "note": "The marketplace catalog. Use search_agents / get_agent to browse existing agents."
     }
   }
