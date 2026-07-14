@@ -1,0 +1,28 @@
+{
+  "name": "job-finder",
+  "version": "0.1.0",
+  "description": "Finds roles that actually fit you. Pulls from job boards and a curated hiring network, screens for fit against your background, and drafts tailored outreach to the people who make the call.",
+  "author": {
+    "name": "newb.works",
+    "url": "https://newb.works"
+  },
+  "homepage": "https://newb.works",
+  "repository": "https://github.com/newbworks/newb-plugins",
+  "license": "MIT",
+  "keywords": [
+    "jobs",
+    "career",
+    "hiring",
+    "recruiting"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Top Job Finder",
+    "shortDescription": "Finds roles that actually fit you. Pulls from job boards and a curated hiring network, screens for fit against your background, and drafts tailored outreach to the people who make the call.",
+    "longDescription": "Finds roles that actually fit you. Pulls from job boards and a curated hiring network, screens for fit against your background, and drafts tailored outreach to the people who make the call. Runs hosted; install to use it.",
+    "developerName": "newb.works",
+    "category": "Career",
+    "websiteURL": "https://newb.works"
+  }
+}

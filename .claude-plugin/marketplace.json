@@ -52,6 +52,40 @@
         "recruiting",
         "resume"
       ]
+    },
+    {
+      "name": "job-finder",
+      "source": "./job-finder-claude",
+      "description": "Finds roles that actually fit you. Pulls from job boards and a curated hiring network, screens for fit against your background, and drafts tailored outreach to the people who make the call.",
+      "version": "0.1.0",
+      "homepage": "https://newb.works",
+      "repository": "https://github.com/newbworks/newb-plugins",
+      "license": "MIT",
+      "category": "Career",
+      "tags": [
+        "jobs",
+        "career",
+        "hiring",
+        "recruiting"
+      ]
+    },
+    {
+      "name": "ymgrad-demo",
+      "source": "./ymgrad-demo-claude",
+      "description": "DEMO study-abroad admissions counselor (YMGrad-style): India-anchored and honest about your real chances at US master's programs. Uses clearly-labeled fictional sample data.",
+      "version": "0.1.0",
+      "homepage": "https://newb.works",
+      "repository": "https://github.com/newbworks/newb-plugins",
+      "license": "MIT",
+      "category": "Education",
+      "tags": [
+        "education",
+        "study-abroad",
+        "admissions",
+        "demo",
+        "india",
+        "sop"
+      ]
     }
   ]
 }

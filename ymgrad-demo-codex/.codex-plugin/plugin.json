@@ -1,0 +1,30 @@
+{
+  "name": "ymgrad-demo",
+  "version": "0.1.0",
+  "description": "DEMO study-abroad admissions counselor (YMGrad-style): India-anchored and honest about your real chances at US master's programs. Uses clearly-labeled fictional sample data.",
+  "author": {
+    "name": "newb.works",
+    "url": "https://newb.works"
+  },
+  "homepage": "https://newb.works",
+  "repository": "https://github.com/newbworks/newb-plugins",
+  "license": "MIT",
+  "keywords": [
+    "education",
+    "study-abroad",
+    "admissions",
+    "demo",
+    "india",
+    "sop"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "YMGrad-Demo Admissions Counselor",
+    "shortDescription": "DEMO study-abroad admissions counselor (YMGrad-style): India-anchored and honest about your real chances at US master's programs. Uses clearly-labeled fictional sample data.",
+    "longDescription": "DEMO study-abroad admissions counselor (YMGrad-style): India-anchored and honest about your real chances at US master's programs. Uses clearly-labeled fictional sample data. Runs hosted; install to use it.",
+    "developerName": "newb.works",
+    "category": "Education",
+    "websiteURL": "https://newb.works"
+  }
+}

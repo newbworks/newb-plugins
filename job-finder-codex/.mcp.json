@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "job-finder": {
+      "type": "http",
+      "url": "https://46-224-211-61.sslip.io/mcp/job-finder/"
+    }
+  }
+}

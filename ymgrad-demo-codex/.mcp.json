@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "ymgrad-demo": {
+      "type": "http",
+      "url": "https://46-224-211-61.sslip.io/mcp/ymgrad-demo/"
+    }
+  }
+}
