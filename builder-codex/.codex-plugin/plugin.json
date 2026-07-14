@@ -1,6 +1,6 @@
 {
   "name": "newb-builder",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Build and publish your own expert agent to the newb marketplace.",
   "author": {
     "name": "newb.works",
