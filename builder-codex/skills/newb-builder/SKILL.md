@@ -78,8 +78,8 @@ step has `id`, `model`, `prompt` (a template — `{input}` is the buyer's reques
   "id": "sop_review", "name": "SOP review", "description": "Score + rewrite an SOP.",
   "price_credits": 300,
   "steps": [
-    { "id": "score",   "model": "claude-sonnet-4", "max_tokens": 800,  "prompt": "Score this SOP on the rubric: {input}" },
-    { "id": "rewrite", "model": "claude-opus-4",   "max_tokens": 1500, "prompt": "Top 3 fixes using {score}, for: {input}" }
+    { "id": "score",   "model": "claude-sonnet-5", "max_tokens": 800,  "prompt": "Score this SOP on the rubric: {input}" },
+    { "id": "rewrite", "model": "claude-opus-4-8", "max_tokens": 1500, "prompt": "Top 3 fixes using {score}, for: {input}" }
   ]
 }]
 ```
@@ -92,7 +92,10 @@ field**; a step missing `id` or `prompt` is **rejected at publish**. Always run
 
 Steps are **pure model calls** — they can't run a script or an MCP tool
 mid-pipeline. For a tool that needs your MCP tools or scripts, DON'T use `steps`:
-make it a classic tool and pin its model with `"model": "claude-sonnet-4"`.
+make it a classic tool and pin its model with `"model": "claude-sonnet-5"`.
+Use **current** model IDs (`claude-opus-4-8`, `claude-sonnet-5`,
+`claude-haiku-4-5`) — a retired or misspelled model is caught by `validate` and
+crashes at runtime, so never guess an ID.
 
 **Push deterministic work into `scripts/`.** Cutoffs, parsing, scoring,
 validation, formatting — anything that isn't reasoning — belongs in a script (free
