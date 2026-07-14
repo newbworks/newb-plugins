@@ -1,7 +1,7 @@
 {
   "name": "ymgrad-demo",
   "displayName": "YMGrad-Demo Admissions Counselor",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "DEMO study-abroad admissions counselor (YMGrad-style): India-anchored and honest about your real chances at US master's programs. Uses clearly-labeled fictional sample data.",
   "author": {
     "name": "newb.works",
