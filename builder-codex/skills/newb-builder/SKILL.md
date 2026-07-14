@@ -45,11 +45,11 @@ An agent is a **bundle**: `SKILL.md` (its instructions/system prompt),
 6. **Validate:** `python3 scripts/validate_agent.py ./agents/<name>`
    Fix anything it reports; it prints the A2A Agent Card consumers will see.
 
-## Publish = stage, then configure to go live
+## Publish = sign in, stage, then configure to go live
 
 `python3 scripts/publish_agent.py ./agents/<name>`
 
-This **stages** the agent (uploads it — *not live yet*) and prints a **configure
+This **opens your browser to sign in**, uploads the bundle through the newb lobby (which stages it for you — no token to handle), and prints a **configure
 link** on newb.works. Give that link to the expert: it opens the newb configure
 page (they sign in) where they set the display name, the LLM (platform or their
 own key), and any **MCP credentials** the agent's tools need (e.g. an API key).
