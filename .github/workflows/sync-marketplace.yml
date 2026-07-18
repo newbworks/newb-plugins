@@ -38,7 +38,7 @@ jobs:
           NEWB_CATALOG_URL: ${{ vars.NEWB_CATALOG_URL }}
         run: |
           python3 scripts/sync_marketplace.py \
-            --catalog-url "${NEWB_CATALOG_URL:-https://46-224-211-61.sslip.io/catalog.json}" \
+            --catalog-url "${NEWB_CATALOG_URL:-https://agents.newb.works/catalog.json}" \
             --root .
 
       - name: Commit & push if changed

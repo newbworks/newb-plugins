@@ -89,7 +89,7 @@ def is_generated(d: Path) -> bool:
 def write_wrapper(root: Path, a: dict) -> None:
     slug = a["slug"]
     ver = a.get("version") or "0.1.0"
-    endpoint = a.get("endpoint") or f"https://46-224-211-61.sslip.io/mcp/{slug}/"
+    endpoint = a.get("endpoint") or f"https://agents.newb.works/mcp/{slug}/"
     tags = a.get("tags") or []
     category = a.get("category") or "Other"
     mcp = {"mcpServers": {slug: {"type": "http", "url": endpoint}}}

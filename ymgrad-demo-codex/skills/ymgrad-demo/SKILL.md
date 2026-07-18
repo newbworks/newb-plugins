@@ -9,7 +9,7 @@ DEMO study-abroad admissions counselor (YMGrad-style): India-anchored and honest
 
 This plugin is a thin wrapper around the **YMGrad-Demo Admissions Counselor** expert agent,
 which runs **hosted** on the newb marketplace. The reasoning happens
-server-side; this plugin connects your app to it over MCP (`https://46-224-211-61.sslip.io/mcp/ymgrad-demo/`). Using
+server-side; this plugin connects your app to it over MCP (`https://agents.newb.works/mcp/ymgrad-demo/`). Using
 it signs you in to newb.
 
 ## What it can do

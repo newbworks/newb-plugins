@@ -31,7 +31,7 @@ import webbrowser
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
 
-DEFAULT_HOST = "https://46-224-211-61.sslip.io"
+DEFAULT_HOST = "https://agents.newb.works"
 DEFAULT_LOBBY = "https://marketplace.newb.works"
 
 

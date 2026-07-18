@@ -2,7 +2,7 @@
   "mcpServers": {
     "recruiting-copilot": {
       "type": "http",
-      "url": "https://46-224-211-61.sslip.io/mcp/recruiting-copilot/"
+      "url": "https://agents.newb.works/mcp/recruiting-copilot/"
     }
   }
 }
