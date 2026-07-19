@@ -2,8 +2,8 @@
   "mcpServers": {
     "newb-marketplace": {
       "type": "http",
-      "url": "https://agents.newb.works/mcp/",
-      "note": "The marketplace catalog. Use search_agents / get_agent to browse existing agents."
+      "url": "https://agents.newb.works/mcp/builder/",
+      "note": "The builder's marketplace connector (lobby OAuth): browse with search_agents / get_agent, publish with request_publish. Connecting this server IS the sign-in — there is no separate publish auth."
     }
   }
 }

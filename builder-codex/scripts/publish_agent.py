@@ -22,6 +22,7 @@ import os
 import secrets
 import sys
 import tarfile
+import tempfile
 import threading
 import time
 import urllib.error
@@ -181,7 +182,7 @@ def _git_state(d: Path) -> tuple:
 
 def main() -> None:
     ap = argparse.ArgumentParser(description="Publish a bundle to the newb marketplace.")
-    ap.add_argument("bundle_dir", help="path to the agent bundle directory")
+    ap.add_argument("bundle_dir", nargs="?", help="path to the agent bundle directory")
     ap.add_argument("--lobby", default=DEFAULT_LOBBY,
                     help="newb lobby base URL (default: marketplace.newb.works)")
     ap.add_argument("--token", default=os.environ.get("NEWB_MARKETPLACE_PUBLISH_TOKEN"),
@@ -192,8 +193,39 @@ def main() -> None:
     ap.add_argument("--allow-dirty", action="store_true",
                     help="publish even if the bundle has uncommitted changes "
                          "(not recommended)")
+    # Ticketed publish (works headless — Cowork, SSH, CI). Identity comes from
+    # the newb-marketplace MCP connector's OAuth, NOT from this script:
+    #   1. --prepare        tar the bundle, print its sha256 + tarball path
+    #   2. call the connector tool `request_publish(sha256)` → upload_url
+    #      (first use prompts you to connect/sign in — that's the only auth)
+    #   3. --upload T URL   POST the saved tarball to the ticket URL
+    ap.add_argument("--prepare", action="store_true",
+                    help="tar the bundle and print sha256 + tarball path, then stop; "
+                         "next: call the connector's request_publish tool")
+    ap.add_argument("--upload", nargs=2, metavar=("TARBALL", "UPLOAD_URL"),
+                    help="POST a --prepare'd tarball to a request_publish upload URL")
     args = ap.parse_args()
 
+    if args.upload:
+        tar_path, url = args.upload
+        if not Path(tar_path).is_file():
+            sys.exit(f"tarball not found: {tar_path}\n"
+                     "run `publish_agent.py <bundle> --prepare` first — the ticket "
+                     "binds to those exact bytes, so re-tarring won't match.")
+        data = Path(tar_path).read_bytes()
+        sha = hashlib.sha256(data).hexdigest()
+        result = _post(url, data, "application/gzip")
+        slug = result.get("slug", "?")
+        print(f"\n✓ staged '{slug}' (hidden — not live yet)  [sha256 {sha[:12]}]")
+        if result.get("archived"):
+            print(f"  ✓ source archived server-side ({result.get('archive_path', '')})")
+        cfg = result.get("configure_url", "")
+        print("  Finish on the configure page to publish — set the LLM + pricing:")
+        print(f"\n    {cfg}\n")
+        return
+
+    if not args.bundle_dir:
+        ap.error("bundle_dir is required (except with --upload)")
     d = Path(args.bundle_dir)
     manifest = d / ".codex-plugin" / "plugin.json"
     if not (d / "SKILL.md").is_file() or not manifest.is_file():
@@ -214,6 +246,21 @@ def main() -> None:
     slug = json.loads(manifest.read_text(encoding="utf-8"))["name"]
     tar = _tar_bundle(d)
     lobby = args.lobby.rstrip("/")
+
+    if args.prepare:
+        # Save the exact bytes (re-tarring later would change the gzip mtime
+        # and break the sha the ticket binds to), print what the connector
+        # tool needs, and stop.
+        out = Path(tempfile.gettempdir()) / f"{slug}-bundle.tar.gz"
+        out.write_bytes(tar)
+        sha = hashlib.sha256(tar).hexdigest()
+        print(f"tarball: {out}")
+        print(f"sha256:  {sha}")
+        print(f"size:    {len(tar)} bytes")
+        print("\nNext: call the newb-marketplace tool  request_publish(sha256=…)")
+        print("(first use will prompt you to connect/sign in — that's the only auth)")
+        print(f"then:  python3 scripts/publish_agent.py --upload {out} \"<upload_url>\"")
+        return
 
     if args.token:
         # Legacy/CI: push straight to the executor with the shared token.

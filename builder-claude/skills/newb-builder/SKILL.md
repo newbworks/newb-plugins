@@ -115,23 +115,38 @@ server inside the bundle and launch it locally:
 A bundled server keeps the agent self-contained (no external dependency). Secrets
 go in as `${ENV_VAR}` and are authorized on the configure page.
 
-## Publish = sign in, stage, then configure to go live
-
-```bash
-python3 scripts/publish_agent.py ./agents/<name>
-```
+## Publish = the connector's sign-in + a ticketed upload
 
 **Commit before you publish.** Publishing uploads the bundle straight to the
 hosted executor — it never passes through git. The script refuses a bundle
 with uncommitted changes (override with `--allow-dirty`), and warns if the
-bundle isn't in a git repo at all: keep your agent's source committed so you
-always hold the code you shipped. (The marketplace also archives the staged
+bundle isn't in a git repo at all. (The marketplace also archives the staged
 source server-side on every publish.)
 
-This **opens your browser to sign in**, then uploads the bundle through the newb
-lobby, which stages it on the executor for you — no token to handle. (`--token`
-stays a legacy/CI path for a direct executor push.) It prints a **configure
-link** on newb.works. Give that link to the expert: it opens the newb configure
+The default flow works from ANYWHERE — Cowork, SSH, CI, desktop — because
+identity comes from this plugin's `newb-marketplace` connector (lobby OAuth),
+not from the script. Three steps:
+
+```bash
+# 1. pack the bundle (runs the commit guard; prints the tarball path + sha256)
+python3 scripts/publish_agent.py ./agents/<name> --prepare
+
+# 2. call the connector tool with that sha256:
+#      request_publish(sha256="<hex from step 1>")
+#    If the connector isn't signed in yet, the client prompts the user to
+#    connect it (that IS the sign-in — there is no separate publish auth).
+#    The tool returns a short-lived upload_url bound to you + those bytes.
+
+# 3. upload the exact tarball from step 1 (never re-tar — the sha must match)
+python3 scripts/publish_agent.py --upload <tarball> "<upload_url>"
+```
+
+On a desktop you may instead run the one-shot fallback
+`python3 scripts/publish_agent.py ./agents/<name>` — it opens a browser for a
+loopback sign-in (this path cannot work headless). `--token` stays a
+legacy/CI path for a direct executor push.
+
+Either way it prints a **configure link** on newb.works. Give that link to the expert: it opens the newb configure
 page (they sign in) where they set the display name, the LLM (platform or their
 own key), and any **MCP credentials** the agent's tools need (e.g. an API key).
 **Submitting that page is what publishes it** — only then is it live at
