@@ -141,6 +141,12 @@ python3 scripts/publish_agent.py ./agents/<name> --prepare
 python3 scripts/publish_agent.py --upload <tarball> "<upload_url>"
 ```
 
+**If step 3 fails with a network/403 error** (some sandboxes block outbound
+HTTP to the marketplace), publish fully in-band instead: run
+`python3 scripts/publish_agent.py --emit-b64 <tarball>` and call the connector
+tool `publish_bundle(content_base64=<that output>)` — the marketplace stages
+and archives it server-side (small bundles only, 2MB decoded cap).
+
 On a desktop you may instead run the one-shot fallback
 `python3 scripts/publish_agent.py ./agents/<name>` — it opens a browser for a
 loopback sign-in (this path cannot work headless). `--token` stays a

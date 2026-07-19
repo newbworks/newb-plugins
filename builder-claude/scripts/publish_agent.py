@@ -204,7 +204,17 @@ def main() -> None:
                          "next: call the connector's request_publish tool")
     ap.add_argument("--upload", nargs=2, metavar=("TARBALL", "UPLOAD_URL"),
                     help="POST a --prepare'd tarball to a request_publish upload URL")
+    ap.add_argument("--emit-b64", metavar="TARBALL",
+                    help="print a --prepare'd tarball as base64 (for the connector's "
+                         "publish_bundle fallback when the sandbox blocks the upload)")
     args = ap.parse_args()
+
+    if args.emit_b64:
+        tp = Path(args.emit_b64)
+        if not tp.is_file():
+            sys.exit(f"tarball not found: {tp} — run --prepare first")
+        print(base64.b64encode(tp.read_bytes()).decode())
+        return
 
     if args.upload:
         tar_path, url = args.upload
