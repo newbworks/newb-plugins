@@ -57,6 +57,19 @@
       "description": "Finds roles that actually fit you. Pulls from job boards and a curated hiring network, screens for fit against your background, and drafts tailored outreach to the people who make the call."
     },
     {
+      "name": "webship",
+      "source": {
+        "source": "local",
+        "path": "./webship-codex"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Web Development",
+      "description": "Reviews and ships production websites \u2014 audits existing sites, and builds + deploys new ones (React + shadcn/ui) to GitHub and Vercel."
+    },
+    {
       "name": "ymgrad-demo",
       "source": {
         "source": "local",

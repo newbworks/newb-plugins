@@ -70,6 +70,25 @@
       ]
     },
     {
+      "name": "webship",
+      "source": "./webship-claude",
+      "description": "Reviews and ships production websites \u2014 audits existing sites, and builds + deploys new ones (React + shadcn/ui) to GitHub and Vercel.",
+      "version": "0.1.0",
+      "homepage": "https://newb.works",
+      "repository": "https://github.com/newbworks/newb-plugins",
+      "license": "MIT",
+      "category": "Web Development",
+      "tags": [
+        "web-development",
+        "react",
+        "shadcn",
+        "vercel",
+        "github",
+        "website-audit",
+        "deployment"
+      ]
+    },
+    {
       "name": "ymgrad-demo",
       "source": "./ymgrad-demo-claude",
       "description": "DEMO study-abroad admissions counselor (YMGrad-style): India-anchored and honest about your real chances at US master's programs. Uses clearly-labeled fictional sample data.",

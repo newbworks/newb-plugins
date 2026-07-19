@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "webship": {
+      "type": "http",
+      "url": "https://agents.newb.works/mcp/webship/"
+    }
+  }
+}

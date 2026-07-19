@@ -1,0 +1,31 @@
+{
+  "name": "webship",
+  "version": "0.1.0",
+  "description": "Reviews and ships production websites \u2014 audits existing sites, and builds + deploys new ones (React + shadcn/ui) to GitHub and Vercel.",
+  "author": {
+    "name": "newb.works",
+    "url": "https://newb.works"
+  },
+  "homepage": "https://newb.works",
+  "repository": "https://github.com/newbworks/newb-plugins",
+  "license": "MIT",
+  "keywords": [
+    "web-development",
+    "react",
+    "shadcn",
+    "vercel",
+    "github",
+    "website-audit",
+    "deployment"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Webship",
+    "shortDescription": "Reviews and ships production websites \u2014 audits existing sites, and builds + deploys new ones (React + shadcn/ui) to GitHub and Vercel.",
+    "longDescription": "Reviews and ships production websites \u2014 audits existing sites, and builds + deploys new ones (React + shadcn/ui) to GitHub and Vercel. Runs hosted; install to use it.",
+    "developerName": "newb.works",
+    "category": "Web Development",
+    "websiteURL": "https://newb.works"
+  }
+}
