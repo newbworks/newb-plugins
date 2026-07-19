@@ -121,6 +121,13 @@ go in as `${ENV_VAR}` and are authorized on the configure page.
 python3 scripts/publish_agent.py ./agents/<name>
 ```
 
+**Commit before you publish.** Publishing uploads the bundle straight to the
+hosted executor — it never passes through git. The script refuses a bundle
+with uncommitted changes (override with `--allow-dirty`), and warns if the
+bundle isn't in a git repo at all: keep your agent's source committed so you
+always hold the code you shipped. (The marketplace also archives the staged
+source server-side on every publish.)
+
 This **opens your browser to sign in**, then uploads the bundle through the newb
 lobby, which stages it on the executor for you — no token to handle. (`--token`
 stays a legacy/CI path for a direct executor push.) It prints a **configure

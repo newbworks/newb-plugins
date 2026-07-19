@@ -156,6 +156,29 @@ def _oauth_login(lobby: str) -> str:
     return tok["access_token"]
 
 
+# ── version-control guard ─────────────────────────────────────────────
+# Publishing uploads the bundle straight to the hosted executor — it does NOT
+# go through git. A bundle with uncommitted changes would ship code that has
+# no version-controlled source on YOUR side. (The marketplace also archives
+# the exact staged source server-side, but your own repo is the copy you
+# control.) So: commit first, or pass --allow-dirty to override.
+
+def _git_state(d: Path) -> tuple:
+    """(in_git, dirty_paths) for the bundle dir. Never raises — no git binary
+    or not-a-repo just yields (False, [])."""
+    import subprocess
+    try:
+        r = subprocess.run(["git", "-C", str(d), "rev-parse", "--is-inside-work-tree"],
+                           capture_output=True, text=True, timeout=10)
+        if r.returncode != 0 or r.stdout.strip() != "true":
+            return (False, [])
+        s = subprocess.run(["git", "-C", str(d), "status", "--porcelain", "--", "."],
+                           capture_output=True, text=True, timeout=10)
+        return (True, [ln[3:] for ln in s.stdout.splitlines() if ln.strip()])
+    except Exception:
+        return (False, [])
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description="Publish a bundle to the newb marketplace.")
     ap.add_argument("bundle_dir", help="path to the agent bundle directory")
@@ -166,12 +189,28 @@ def main() -> None:
                          "skipping sign-in")
     ap.add_argument("--host", default=DEFAULT_HOST,
                     help="executor host for the --token path")
+    ap.add_argument("--allow-dirty", action="store_true",
+                    help="publish even if the bundle has uncommitted changes "
+                         "(not recommended)")
     args = ap.parse_args()
 
     d = Path(args.bundle_dir)
     manifest = d / ".codex-plugin" / "plugin.json"
     if not (d / "SKILL.md").is_file() or not manifest.is_file():
         sys.exit(f"not a bundle: {d}\n  need SKILL.md + .codex-plugin/plugin.json")
+
+    in_git, dirty = _git_state(d)
+    if not in_git:
+        print("warning: this bundle is not in a git repository — its source is not\n"
+              "version-controlled on your side. Consider `git init` + commit before\n"
+              "publishing, so you always hold the code you shipped.", file=sys.stderr)
+    elif dirty and not args.allow_dirty:
+        listing = "\n".join(f"  {p}" for p in dirty[:20])
+        more = f"\n  … and {len(dirty) - 20} more" if len(dirty) > 20 else ""
+        sys.exit("this bundle has uncommitted changes:\n"
+                 f"{listing}{more}\n"
+                 "commit them first (publishing bypasses git, so uncommitted code would\n"
+                 "have no version-controlled source), or re-run with --allow-dirty.")
     slug = json.loads(manifest.read_text(encoding="utf-8"))["name"]
     tar = _tar_bundle(d)
     lobby = args.lobby.rstrip("/")
@@ -192,6 +231,9 @@ def main() -> None:
                          or f"{lobby}/marketplace/experts/agents/{slug}/configure")
 
     print(f"\n✓ staged '{slug}' (hidden — not live yet)")
+    if result.get("archived"):
+        where = result.get("archive_path", "the marketplace archive")
+        print(f"  ✓ source archived server-side ({where})")
     print("  Finish on the configure page to publish — set the LLM + pricing, then submit:")
     print(f"\n    {configure_url}\n")
 
