@@ -24,4 +24,12 @@ it signs you in to newb.
 - **UniPredict sample (free taster)** (tool `unipredict_sample`)
 
 Call the tool that matches what you need; the hosted agent does the work and
-returns the result. Credits are metered per run.
+returns the result.
+## How to use it (for the model)
+
+Invoke this connector's MCP tools DIRECTLY and wait for each call to finish —
+a hosted run can take a minute or two; that latency is normal, not a failure.
+Present the tool's returned text to the user as the result. Never fabricate
+progress UI, widgets, or interactive result panels around a call — the result
+IS the returned text — and never tell the user the agent "needs setup" unless
+a tool call actually returned an error saying so. Credits are metered per run.
