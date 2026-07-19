@@ -32,4 +32,8 @@ a hosted run can take a minute or two; that latency is normal, not a failure.
 Present the tool's returned text to the user as the result. Never fabricate
 progress UI, widgets, or interactive result panels around a call — the result
 IS the returned text — and never tell the user the agent "needs setup" unless
-a tool call actually returned an error saying so. Credits are metered per run.
+a tool call actually returned an error saying so.
+
+While a call runs, this connector streams MCP progress notifications (live
+status + elapsed-time heartbeats). If your client surfaces them, relay them
+to the user as brief status updates while you wait. Credits are metered per run.
