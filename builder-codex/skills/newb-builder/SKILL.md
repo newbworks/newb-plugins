@@ -147,6 +147,12 @@ HTTP to the marketplace), publish fully in-band instead: run
 tool `publish_bundle(content_base64=<that output>)` — the marketplace stages
 and archives it server-side (small bundles only, 2MB decoded cap).
 
+**If the stage is rejected with 403 / `slug_forbidden`:** the bundle's slug
+already belongs to a DIFFERENT newb account (accounts are distinct even for the
+same person — e.g. a work vs personal email). Either re-connect the
+`newb-marketplace` connector signed in as the owning account, or change the
+bundle's `name` in `.codex-plugin/plugin.json` to publish it as a new agent.
+
 On a desktop you may instead run the one-shot fallback
 `python3 scripts/publish_agent.py ./agents/<name>` — it opens a browser for a
 loopback sign-in (this path cannot work headless). `--token` stays a
