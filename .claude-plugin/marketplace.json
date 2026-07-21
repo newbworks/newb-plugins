@@ -73,7 +73,7 @@
       "name": "webship",
       "source": "./webship-claude",
       "description": "Reviews and ships production websites \u2014 audits existing sites, and builds + deploys new ones (React + shadcn/ui) to GitHub and Vercel.",
-      "version": "0.1.3",
+      "version": "0.2.0",
       "homepage": "https://newb.works",
       "repository": "https://github.com/newbworks/newb-plugins",
       "license": "MIT",
