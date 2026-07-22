@@ -48,6 +48,16 @@ An agent is a **bundle**: `SKILL.md` (its instructions/system prompt),
    python3 scripts/validate_agent.py ./agents/<name>
    ```
    Fix anything it reports; it also prints the A2A Agent Card consumers see.
+   The script needs the newb repo on PYTHONPATH (it uses the real loader). In
+   a sandbox without it, use the `newb-marketplace` MCP tool
+   **`validate_agent`** instead — pass `bundle_base64` (print it with
+   `publish_agent.py --emit-b64 <tarball>` after `--prepare`) to pre-check the
+   local bundle without staging, or `agent_id` to check an already-staged
+   agent. It runs the full publish lint with the live rate card: pricing
+   floors (including outcome floors), rubric size, retired models, TODOs.
+   Staging enforces the same checks server-side, so an invalid bundle is
+   rejected at upload with the same messages — validate first to avoid the
+   round-trip.
 
 ## Pricing & advanced tools
 
