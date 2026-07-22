@@ -25,6 +25,7 @@
     "longDescription": "DEMO study-abroad admissions counselor (YMGrad-style): India-anchored and honest about your real chances at US master's programs. Uses clearly-labeled fictional sample data. Runs hosted; install to use it.",
     "developerName": "newb.works",
     "category": "Education",
-    "websiteURL": "https://newb.works"
+    "websiteURL": "https://newb.works",
+    "iconURL": "https://agents.newb.works/agents/ymgrad-demo/logo.svg"
   }
 }

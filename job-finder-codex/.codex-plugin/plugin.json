@@ -23,6 +23,7 @@
     "longDescription": "Finds roles that actually fit you. Pulls from job boards and a curated hiring network, screens for fit against your background, and drafts tailored outreach to the people who make the call. Runs hosted; install to use it.",
     "developerName": "newb.works",
     "category": "Career",
-    "websiteURL": "https://newb.works"
+    "websiteURL": "https://newb.works",
+    "iconURL": "https://agents.newb.works/agents/job-finder/logo.svg"
   }
 }

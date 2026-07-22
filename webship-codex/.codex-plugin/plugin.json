@@ -26,6 +26,7 @@
     "longDescription": "Reviews and ships production websites \u2014 audits existing sites, and builds + deploys new ones (React + shadcn/ui) to GitHub and Vercel. Runs hosted; install to use it.",
     "developerName": "newb.works",
     "category": "Web Development",
-    "websiteURL": "https://newb.works"
+    "websiteURL": "https://newb.works",
+    "iconURL": "https://agents.newb.works/agents/webship/logo.svg"
   }
 }
