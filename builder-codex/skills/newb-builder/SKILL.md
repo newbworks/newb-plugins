@@ -102,6 +102,52 @@ validation, formatting — anything that isn't reasoning — belongs in a script
 to run, and it keeps model calls short and cheap). Reserve frontier models for the
 one or two genuinely hard steps per tool.
 
+## Outcome pricing (success fee) — sell a completed service
+
+Instead of a flat per-call sticker, a tool can bill **only when the deliverable
+is actually done**: an independent grader (separate context, can't be talked
+into a pass) scores the deliverable against the expert's **published rubric**;
+the hosted agent revises on the grader's feedback up to `max_iterations`. A
+*satisfied* verdict bills the sticker; anything else bills the buyer **nothing**
+and auto-escalates the run to the expert's inbox.
+
+**When to offer it.** Ask the expert, per tool: "flat price per call, or a
+success fee — the buyer pays only if the deliverable meets your definition of
+done?" A success fee fits deliverable-shaped tools (a review, a draft, a model,
+a report) with checkable criteria. It does NOT fit open-ended conversation —
+keep `ask`-like tools usage-based.
+
+**Interview the expert for the rubric — this is the productization step:**
+1. Best method: ask for a **known-good example deliverable**, analyze what makes
+   it good, and draft the rubric from that. Otherwise interview for explicit
+   criteria: "what would make you reject this deliverable?"
+2. Write objective, gradeable, criterion-per-line items under headings —
+   "The CSV contains a price column with numeric values", never "the output
+   looks good". **The grader is literal**: vague criteria produce noisy grades
+   and angry buyers.
+3. Show the expert the draft and iterate. Make two things explicit: the rubric
+   is **public** (it's on the agent card — it is the service contract), and an
+   unsatisfied run means they earn nothing while still paying the compute, and
+   the job lands in their escalation inbox to finish by hand.
+4. Save it as `rubrics/<skill-id>.md` in the bundle and mark the skill:
+
+```json
+"skills": [{
+  "id": "dcf_model", "name": "DCF model", "description": "Build a DCF model as .xlsx.",
+  "price_credits": 2500,
+  "outcome": { "rubric_file": "rubrics/dcf_model.md", "max_iterations": 3 }
+}]
+```
+
+`max_iterations` (1–10, default 3) is the revision budget per run: more retries
+raise the success rate but burn more compute per run — compute the expert pays
+for even when the run fails. An optional `"grader_model"` overrides the
+platform's default (a cheap model; grading is classification, not generation).
+An outcome tool **requires** a positive `price_credits`, and its floor is
+higher than a flat tool's: `max_iterations × (compute + grader) / (1 − 20%)` —
+`validate` prints it. Steps pipelines and classic tools can both be
+outcome-priced; the loop wraps whichever the tool uses.
+
 **Your tools = MCP servers (`.mcp.json`).** The live data/tools your agent uses.
 Point at an external package (`npx -y <pkg>`) OR ship your own self-contained
 server inside the bundle and launch it locally:
@@ -115,50 +161,16 @@ server inside the bundle and launch it locally:
 A bundled server keeps the agent self-contained (no external dependency). Secrets
 go in as `${ENV_VAR}` and are authorized on the configure page.
 
-## Publish = the connector's sign-in + a ticketed upload
-
-**Commit before you publish.** Publishing uploads the bundle straight to the
-hosted executor — it never passes through git. The script refuses a bundle
-with uncommitted changes (override with `--allow-dirty`), and warns if the
-bundle isn't in a git repo at all. (The marketplace also archives the staged
-source server-side on every publish.)
-
-The default flow works from ANYWHERE — Cowork, SSH, CI, desktop — because
-identity comes from this plugin's `newb-marketplace` connector (lobby OAuth),
-not from the script. Three steps:
+## Publish = sign in, stage, then configure to go live
 
 ```bash
-# 1. pack the bundle (runs the commit guard; prints the tarball path + sha256)
-python3 scripts/publish_agent.py ./agents/<name> --prepare
-
-# 2. call the connector tool with that sha256:
-#      request_publish(sha256="<hex from step 1>")
-#    If the connector isn't signed in yet, the client prompts the user to
-#    connect it (that IS the sign-in — there is no separate publish auth).
-#    The tool returns a short-lived upload_url bound to you + those bytes.
-
-# 3. upload the exact tarball from step 1 (never re-tar — the sha must match)
-python3 scripts/publish_agent.py --upload <tarball> "<upload_url>"
+python3 scripts/publish_agent.py ./agents/<name>
 ```
 
-**If step 3 fails with a network/403 error** (some sandboxes block outbound
-HTTP to the marketplace), publish fully in-band instead: run
-`python3 scripts/publish_agent.py --emit-b64 <tarball>` and call the connector
-tool `publish_bundle(content_base64=<that output>)` — the marketplace stages
-and archives it server-side (small bundles only, 2MB decoded cap).
-
-**If the stage is rejected with 403 / `slug_forbidden`:** the bundle's slug
-already belongs to a DIFFERENT newb account (accounts are distinct even for the
-same person — e.g. a work vs personal email). Either re-connect the
-`newb-marketplace` connector signed in as the owning account, or change the
-bundle's `name` in `.codex-plugin/plugin.json` to publish it as a new agent.
-
-On a desktop you may instead run the one-shot fallback
-`python3 scripts/publish_agent.py ./agents/<name>` — it opens a browser for a
-loopback sign-in (this path cannot work headless). `--token` stays a
-legacy/CI path for a direct executor push.
-
-Either way it prints a **configure link** on newb.works. Give that link to the expert: it opens the newb configure
+This **opens your browser to sign in**, then uploads the bundle through the newb
+lobby, which stages it on the executor for you — no token to handle. (`--token`
+stays a legacy/CI path for a direct executor push.) It prints a **configure
+link** on newb.works. Give that link to the expert: it opens the newb configure
 page (they sign in) where they set the display name, the LLM (platform or their
 own key), and any **MCP credentials** the agent's tools need (e.g. an API key).
 **Submitting that page is what publishes it** — only then is it live at
