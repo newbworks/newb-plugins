@@ -171,6 +171,18 @@ server inside the bundle and launch it locally:
 A bundled server keeps the agent self-contained (no external dependency). Secrets
 go in as `${ENV_VAR}` and are authorized on the configure page.
 
+## Update an existing agent
+
+Your environment is often a fresh sandbox with no copy of the agent's source —
+never rebuild from memory. Pull the CURRENT source first with the
+`newb-marketplace` MCP tool **`get_agent_source`** (owner-gated: sign in as
+the account that published it): it returns the active bundle as a base64
+.tar.gz. Decode + extract it, make the edits, then `validate_agent` and
+publish as below — same slug, so it stages as the next version. The
+`edit_agent` tool covers only config (LLM, creds, price multiple, logo) via
+the configure page; everything else — SKILL.md, skills/stickers/steps,
+rubrics, scripts, .mcp.json — is a source edit + re-publish.
+
 ## Publish = sign in, stage, then configure to go live
 
 ```bash
