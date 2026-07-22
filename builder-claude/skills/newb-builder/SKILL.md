@@ -36,7 +36,25 @@ An agent is a **bundle**: `SKILL.md` (its instructions/system prompt),
 3. **Write the system prompt.** Edit `./agents/<name>/SKILL.md` — its
    instructions, voice, and guardrails. Be explicit about when it should *stop
    and let the human expert step in* (that powers escalation). Remove every
-   `[TODO: …]`.
+   `[TODO: …]`. Do NOT add client-intake instructions ("first ask for X") —
+   intake is declared in the manifest, not the prompt. Keep the SKILL.md pure
+   expertise.
+
+   **Intake — ask the expert what they need from a client.** For each tool,
+   interview the expert: "what must you know from the client before you can
+   start this job?" Declare it on the skill (up to 5 questions):
+
+   ```json
+   { "id": "review", "description": "Review a website.",
+     "intake": ["What is the site URL?", "What does the business do?",
+                "Who is your ideal customer?", "How does it make money?"] }
+   ```
+
+   The platform pauses the run with EXACTLY these questions before any
+   compute is spent; a well-prepared client can pass the answers upfront and
+   skip the pause. Separately, any named tool can also pause mid-run to ask
+   for essential facts the intake didn't cover — that protocol is
+   platform-injected too. Nothing bills until the final deliverable.
 4. **Fill the manifest.** Edit `./agents/<name>/.codex-plugin/plugin.json`:
    `display_name`, `description`, `tags`, `free_credits_grant`, and the `skills`
    array (each `id` + `description` becomes a tool). Price each tool and choose
