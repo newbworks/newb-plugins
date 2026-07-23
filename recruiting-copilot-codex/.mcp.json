@@ -1,8 +1,0 @@
-{
-  "mcpServers": {
-    "recruiting-copilot": {
-      "type": "http",
-      "url": "https://agents.newb.works/mcp/recruiting-copilot/"
-    }
-  }
-}

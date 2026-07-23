@@ -7,22 +7,6 @@
   },
   "plugins": [
     {
-      "name": "newb",
-      "source": "./claude",
-      "description": "Talk to your newbs from Claude Code. Auto-discovers every newb you have access to.",
-      "version": "0.1.2",
-      "homepage": "https://newb.works",
-      "repository": "https://github.com/newbworks/newb-plugins",
-      "license": "MIT",
-      "category": "productivity",
-      "tags": [
-        "newb",
-        "mcp",
-        "personal-assistant",
-        "delegation"
-      ]
-    },
-    {
       "name": "newb-builder",
       "source": "./builder-claude",
       "description": "Build and publish your own expert agent to the newb marketplace.",
@@ -36,37 +20,6 @@
         "agent",
         "marketplace",
         "builder"
-      ]
-    },
-    {
-      "name": "recruiting-copilot",
-      "source": "./recruiting-copilot-claude",
-      "description": "Finds a candidate's standout edge, targets fitting roles, tailors their resume, and drafts recruiter outreach.",
-      "version": "0.1.2",
-      "homepage": "https://newb.works",
-      "repository": "https://github.com/newbworks/newb-plugins",
-      "license": "MIT",
-      "category": "career",
-      "tags": [
-        "career",
-        "recruiting",
-        "resume"
-      ]
-    },
-    {
-      "name": "job-finder",
-      "source": "./job-finder-claude",
-      "description": "Finds roles that actually fit you. Pulls from job boards and a curated hiring network, screens for fit against your background, and drafts tailored outreach to the people who make the call.",
-      "version": "0.1.0",
-      "homepage": "https://newb.works",
-      "repository": "https://github.com/newbworks/newb-plugins",
-      "license": "MIT",
-      "category": "Career",
-      "tags": [
-        "jobs",
-        "career",
-        "hiring",
-        "recruiting"
       ]
     },
     {

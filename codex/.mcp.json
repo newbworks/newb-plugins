@@ -1,9 +1,0 @@
-{
-  "mcpServers": {
-    "newb": {
-      "type": "http",
-      "url": "https://gateway.newb.works/mcp",
-      "note": "OAuth on first connection. Gateway enumerates the user's accessible newbs (owner + guest) and exposes one set of tools per newb."
-    }
-  }
-}

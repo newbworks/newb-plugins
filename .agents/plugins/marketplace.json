@@ -5,19 +5,6 @@
   },
   "plugins": [
     {
-      "name": "newb",
-      "source": {
-        "source": "local",
-        "path": "./codex"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Agent",
-      "description": "Talk to your newbs from Codex. Auto-discovers every newb you have access to."
-    },
-    {
       "name": "newb-builder",
       "source": {
         "source": "local",
@@ -29,32 +16,6 @@
       },
       "category": "Developer Tools",
       "description": "Build and publish your own expert agent to the newb marketplace."
-    },
-    {
-      "name": "recruiting-copilot",
-      "source": {
-        "source": "local",
-        "path": "./recruiting-copilot-codex"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Career",
-      "description": "Finds a candidate's standout edge, targets fitting roles, tailors their resume, and drafts recruiter outreach."
-    },
-    {
-      "name": "job-finder",
-      "source": {
-        "source": "local",
-        "path": "./job-finder-codex"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Career",
-      "description": "Finds roles that actually fit you. Pulls from job boards and a curated hiring network, screens for fit against your background, and drafts tailored outreach to the people who make the call."
     },
     {
       "name": "webship",

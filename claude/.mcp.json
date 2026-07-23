@@ -1,8 +1,0 @@
-{
-  "mcpServers": {
-    "newb": {
-      "type": "http",
-      "url": "https://gateway.newb.works/mcp"
-    }
-  }
-}

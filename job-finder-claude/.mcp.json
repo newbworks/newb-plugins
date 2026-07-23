@@ -1,8 +1,0 @@
-{
-  "mcpServers": {
-    "job-finder": {
-      "type": "http",
-      "url": "https://agents.newb.works/mcp/job-finder/"
-    }
-  }
-}
