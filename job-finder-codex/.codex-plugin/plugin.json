@@ -24,6 +24,7 @@
     "developerName": "newb.works",
     "category": "Career",
     "websiteURL": "https://newb.works",
-    "iconURL": "https://agents.newb.works/agents/job-finder/logo.svg"
+    "logo": "./assets/logo.svg",
+    "composerIcon": "./assets/logo.svg"
   }
 }

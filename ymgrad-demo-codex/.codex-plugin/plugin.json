@@ -26,6 +26,7 @@
     "developerName": "newb.works",
     "category": "Education",
     "websiteURL": "https://newb.works",
-    "iconURL": "https://agents.newb.works/agents/ymgrad-demo/logo.svg"
+    "logo": "./assets/logo.svg",
+    "composerIcon": "./assets/logo.svg"
   }
 }

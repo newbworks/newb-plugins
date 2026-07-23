@@ -51,8 +51,35 @@ def _write_if_changed(path: Path, content: str) -> bool:
     return True
 
 
+def _write_bytes_if_changed(path: Path, content: bytes) -> bool:
+    if path.is_file() and path.read_bytes() == content:
+        return False
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(content)
+    return True
+
+
 def _write_json(path: Path, obj) -> bool:
     return _write_if_changed(path, json.dumps(obj, indent=2) + "\n")
+
+
+_ICON_EXT_BY_CONTENT_TYPE = {
+    "image/svg+xml": ".svg", "image/png": ".png",
+    "image/jpeg": ".jpg", "image/webp": ".webp",
+}
+
+
+def _fetch_icon(url: str) -> tuple[bytes, str] | None:
+    """Download an agent's icon so Codex can bundle it as a local asset —
+    its plugin schema has no field for a *remote* icon URL, only a
+    relative-path `logo`/`composerIcon` (see the hand-maintained `newb`
+    and `newb-builder` plugins)."""
+    try:
+        with urllib.request.urlopen(url, timeout=30) as r:  # noqa: S310
+            ct = r.headers.get_content_type()
+            return r.read(), _ICON_EXT_BY_CONTENT_TYPE.get(ct, ".png")
+    except OSError:
+        return None
 
 
 def _skill_md(a: dict, endpoint: str) -> str:
@@ -121,17 +148,23 @@ def write_wrapper(root: Path, a: dict) -> None:
     _write_if_changed(cl / MARKER, note)
 
     cx = root / f"{slug}{CODEX_SUFFIX}"
+    interface = {
+        "displayName": a["display_name"], "shortDescription": a["description"],
+        "longDescription": a["description"] + " Runs hosted; install to use it.",
+        "developerName": "newb.works", "category": category,
+        "websiteURL": "https://newb.works",
+    }
+    fetched = _fetch_icon(icon) if icon else None
+    if fetched:
+        data, ext = fetched
+        _write_bytes_if_changed(cx / "assets" / f"logo{ext}", data)
+        interface["logo"] = interface["composerIcon"] = f"./assets/logo{ext}"
     _write_json(cx / ".codex-plugin" / "plugin.json", {
         "name": slug, "version": ver, "description": a["description"],
         "author": AUTHOR, "homepage": "https://newb.works", "repository": REPO,
         "license": "MIT", "keywords": tags, "skills": "./skills/",
         "mcpServers": "./.mcp.json",
-        "interface": {
-            "displayName": a["display_name"], "shortDescription": a["description"],
-            "longDescription": a["description"] + " Runs hosted; install to use it.",
-            "developerName": "newb.works", "category": category,
-            "websiteURL": "https://newb.works", "iconURL": icon,
-        },
+        "interface": interface,
     })
     _write_json(cx / ".mcp.json", mcp)
     _write_if_changed(cx / "skills" / slug / "SKILL.md", skill)

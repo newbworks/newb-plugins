@@ -27,6 +27,7 @@
     "developerName": "newb.works",
     "category": "Web Development",
     "websiteURL": "https://newb.works",
-    "iconURL": "https://agents.newb.works/agents/webship/logo.svg"
+    "logo": "./assets/logo.svg",
+    "composerIcon": "./assets/logo.svg"
   }
 }
