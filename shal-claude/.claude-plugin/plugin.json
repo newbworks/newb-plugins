@@ -1,7 +1,7 @@
 {
   "name": "shal",
   "displayName": "shal",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Reviews websites with a standards-based framework, visualizes an improved concept, then builds and deploys polished changes through GitHub and Vercel.",
   "author": {
     "name": "newb.works",
