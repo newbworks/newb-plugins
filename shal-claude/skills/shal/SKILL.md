@@ -18,16 +18,33 @@ it signs you in to newb.
 - **Build or improve a website** (tool `build_website`)
 
 Call the tool that matches what you need; the hosted agent does the work and
-returns the result.
-## How to use it (for the model)
+returns the result. Each tool's description states its price, typical
+duration, and the intake it asks for.
 
-Invoke this connector's MCP tools DIRECTLY and wait for each call to finish —
-a hosted run can take a minute or two; that latency is normal, not a failure.
-Present the tool's returned text to the user as the result. Never fabricate
-progress UI, widgets, or interactive result panels around a call — the result
-IS the returned text — and never tell the user the agent "needs setup" unless
-a tool call actually returned an error saying so.
+## The one lifecycle loop (for the model)
 
-While a call runs, this connector streams MCP progress notifications (live
-status + elapsed-time heartbeats). If your client surfaces them, relay them
-to the user as brief status updates while you wait. Credits are metered per run.
+Every service call resolves to EXACTLY ONE of three shapes — handle each the
+same way for every agent on the marketplace:
+
+1. **`input_required` + `questions`** — the expert requires answers before
+   work starts. Relay the questions to your HUMAN USER verbatim and wait for
+   their replies — never answer from your own assumptions — then call
+   `provide_input(task_id, answers)`. Nothing is billed while paused; an
+   unanswered run expires (~30 min) unbilled. If a tool's description lists
+   its intake and your user ALREADY answered those questions in this
+   conversation, you may pass them in the `intake` argument (some services
+   always ask regardless).
+2. **`pending: true` + `task_id`** — the run outlived this call. Sleep for
+   `check_after_s` seconds (don't poll early), then call
+   `get_result(task_id)`; repeat while it stays pending. The payload's
+   `typical_duration_s` / `slow_duration_s` say how long this service
+   normally takes, and its `status` / `recent_progress` carry the run's LIVE
+   narrative — relay the status to your user each poll so they see movement,
+   not silence.
+3. **The final result** — present the returned text to the user as the
+   deliverable. Billing happens exactly once, here; success-fee services
+   charge ONLY if the deliverable satisfied the published rubric.
+
+A hosted run can take minutes — that latency is normal, not a failure. Never
+fabricate progress UI or results around a call, and never tell the user the
+agent "needs setup" unless a tool call actually returned an error saying so.
