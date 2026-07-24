@@ -26,9 +26,19 @@ Use the `newb-marketplace` MCP tools before building:
 An agent is a **bundle**: `SKILL.md` (its instructions/system prompt),
 `.mcp.json` (its tools), and `.codex-plugin/plugin.json` (metadata + skills).
 
-1. **Interview the expert.** Nail down: a short slug name, one sentence on what
-   it does, its 2–4 concrete skills, and which external tools/data it needs
-   (each becomes an MCP server).
+1. **Interview the expert.** Ask for each of these — don't assume, and don't
+   silently default:
+   - **Name (slug)** — lowercase hyphen-case, drives the URL `<host>/mcp/<slug>`.
+   - **Display name** — the human-facing title shown on the listing (defaults
+     to a title-cased slug if they don't care).
+   - **One sentence** on what the agent does for the user (the listing blurb).
+   - **Tags + category** — how it's found in the catalog.
+   - **Logo** — how the agent looks in the catalog and as the installed
+     plugin's icon. Ask "do you have a logo?" See **Logo** below; if they
+     don't, skip it — every agent gets a distinct generated mark for free.
+   - **Skills** — its 2–4 concrete priced tools (each becomes a tool the buyer
+     calls); for each, its intake (step 3) and pricing (**Pricing** below).
+   - **External tools/data** it needs — each becomes an MCP server (step 5).
 2. **Scaffold** (writes `./agents/<name>/`):
    ```bash
    python3 scripts/create_agent.py <name> --dir ./agents
@@ -61,6 +71,30 @@ An agent is a **bundle**: `SKILL.md` (its instructions/system prompt),
    its model(s) — see **Pricing & advanced tools** below.
 5. **Declare tools.** Edit `./agents/<name>/.mcp.json` with the MCP servers the
    agent needs (use `${ENV_VAR}` for secrets — authorize them when configuring).
+
+### Logo
+
+Every agent gets a distinct **generated** initials-on-gradient mark with zero
+effort — so a logo is optional. To use your own, set `newb.logo` in
+`plugin.json` to **either** an image shipped in the bundle **or** an absolute
+URL:
+
+```json
+"newb": { "logo": "assets/logo.png", ... }   // shipped in the bundle
+"newb": { "logo": "https://cdn.example.com/logo.svg", ... }  // hosted elsewhere
+```
+
+- **Shipped asset** (recommended — keeps the agent self-contained): drop the
+  file under `assets/` and point `logo` at its bundle-relative path. Supported:
+  `.png .jpg .jpeg .svg .webp .gif`. The executor serves it at
+  `<host>/agents/<slug>/logo.svg`; `validate` fails if the file is missing.
+- **URL**: any `http(s)` image; the logo endpoint redirects to it.
+
+After publishing, the expert can also swap the logo on the configure page
+(`edit_agent` → `logo`) without a re-publish — that override wins over the
+bundle's `logo`. Precedence: configure-page override → bundle `logo` →
+generated mark. Don't send image **bytes** through a tool response; host the
+image and reference it by URL (same rule as agent output images below).
 6. **Validate:**
    ```bash
    python3 scripts/validate_agent.py ./agents/<name>
@@ -188,6 +222,48 @@ server inside the bundle and launch it locally:
 
 A bundled server keeps the agent self-contained (no external dependency). Secrets
 go in as `${ENV_VAR}` and are authorized on the configure page.
+
+## Returning an image or file to the user
+
+A tool can return more than text — a rendered chart, a generated diagram, a
+produced document. **Host the asset and return its URL; never put raw bytes on
+the wire.** Inside your MCP tool: upload the file, then return a file reference
+alongside your text. The platform carries it to the buyer's client as a
+structured file part (which renders the image); the consumer sees a `files`
+list of `{ "uri", "mime_type", "name" }` on the result.
+
+- Reference by `http(s)` URL (a small `data:` URI is tolerated for a tiny
+  thumbnail; anything large is dropped — host it instead).
+- The URL should be durable for as long as the buyer might re-open the result.
+  A signed URL is fine as long as it outlives the response.
+
+**The platform gives you a host — no storage account needed.** A hosted run
+finds two env vars set: `NEWB_BLOB_UPLOAD_URL` and `NEWB_BLOB_UPLOAD_TOKEN`.
+POST your image bytes there and you get back a durable URL.
+
+The hosted sandbox ships **Node 20 + npx only** — there is no `curl`, `wget`, or
+`python3` — so upload with `fetch` (built into Node 18+):
+
+```js
+import { readFile } from "node:fs/promises";
+
+const res = await fetch(process.env.NEWB_BLOB_UPLOAD_URL, {
+  method: "POST",
+  headers: {
+    Authorization: `Bearer ${process.env.NEWB_BLOB_UPLOAD_TOKEN}`,
+    "Content-Type": "image/png",
+  },
+  body: await readFile("chart.png"),
+});
+const { url } = await res.json();  // → https://.../blob/<hash>.png
+```
+
+The token is per-run and short-lived; the storage credential never touches your
+sandbox. Accepts png/jpeg/webp/gif/svg + pdf, up to 8 MB. Put the returned
+`url` in your tool's file reference.
+
+> The same constraint applies to anything in your bundle's `scripts/`: it runs
+> in that Node-only sandbox. A Python helper will not execute there.
 
 ## Update an existing agent
 

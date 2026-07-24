@@ -89,6 +89,22 @@ EXAMPLE_JSON = [
     }
 ]
 
+ASSETS_README = """\
+# assets/
+
+Static files shipped inside the bundle and served by the executor.
+
+## Logo (optional)
+
+Drop a logo here (`.png .jpg .jpeg .svg .webp .gif`) and point the manifest at
+it:
+
+    "newb": { "logo": "assets/logo.png", ... }
+
+Omit `newb.logo` entirely to use the auto-generated initials mark. You can also
+set/replace the logo after publishing on the configure page.
+"""
+
 
 def write(path: Path, content: str, force: bool) -> None:
     if path.exists() and not force:
@@ -124,11 +140,18 @@ def main() -> int:
     write(root / ".mcp.json", json.dumps(MCP_JSON, indent=2) + "\n", args.force)
     write(root / "examples" / "example-run.json",
           json.dumps(EXAMPLE_JSON, indent=2) + "\n", args.force)
+    # Where a shipped logo goes. Optional — omit newb.logo to use the generated
+    # mark. To use your own, drop the image here and set
+    # "newb": { "logo": "assets/logo.png" } in plugin.json.
+    write(root / "assets" / "README.md", ASSETS_README, args.force)
 
     print(
         "\nNext: edit SKILL.md (system prompt), fill plugin.json + .mcp.json, "
         "remove every [TODO], then run:\n"
-        f"  python3 skills/plugin-builder/scripts/validate_agent.py {root}"
+        f"  python3 scripts/validate_agent.py {root}\n"
+        "Optional: add a logo — drop an image in assets/ and set "
+        '"newb": {"logo": "assets/logo.png"} in plugin.json (or omit it to use '
+        "the auto-generated mark)."
     )
     return 0
 
