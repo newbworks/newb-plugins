@@ -38,9 +38,20 @@ def plugin_json(name: str) -> dict:
             "skills": [
                 {
                     "id": "do_thing",
-                    "name": "[TODO: skill name]",
-                    "description": "[TODO: what this skill does]",
+                    "name": "[TODO: service name]",
+                    "description": "[TODO: what this service delivers to the client]",
                     "tags": [],
+                    # The four required service facets (spec v2):
+                    "billing": "flat",
+                    "price_credits": 100,
+                    "expected_duration": "60s",
+                    "intake": {
+                        "questions": [
+                            "[TODO: what must the client tell you before you can start?]"
+                        ],
+                        "upfront": False,
+                    },
+                    "rubric_file": "rubrics/do_thing.md",
                 }
             ],
         },
@@ -69,6 +80,19 @@ value you provide.]
 - Never invent facts, sources, or results.
 - If you cannot complete the request confidently, say what is blocking you
   so the human expert can step in (this powers escalation).
+"""
+
+RUBRIC_MD = """\
+# Rubric — [TODO: service name]
+
+Grade the deliverable against every line below; all must pass for
+"satisfied". Objective, checkable criteria only — the grader is literal
+("The report names at least 3 competitor sites", never "the output looks
+good"). This rubric is PUBLIC: it appears on the agent card as the
+service's definition of done.
+
+- [TODO: a checkable criterion]
+- [TODO: another criterion]
 """
 
 MCP_JSON = {
@@ -140,6 +164,7 @@ def main() -> int:
     write(root / ".mcp.json", json.dumps(MCP_JSON, indent=2) + "\n", args.force)
     write(root / "examples" / "example-run.json",
           json.dumps(EXAMPLE_JSON, indent=2) + "\n", args.force)
+    write(root / "rubrics" / "do_thing.md", RUBRIC_MD, args.force)
     # Where a shipped logo goes. Optional — omit newb.logo to use the generated
     # mark. To use your own, drop the image here and set
     # "newb": { "logo": "assets/logo.png" } in plugin.json.

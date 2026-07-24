@@ -36,8 +36,9 @@ An agent is a **bundle**: `SKILL.md` (its instructions/system prompt),
    - **Logo** — how the agent looks in the catalog and as the installed
      plugin's icon. Ask "do you have a logo?" See **Logo** below; if they
      don't, skip it — every agent gets a distinct generated mark for free.
-   - **Skills** — its 2–4 concrete priced tools (each becomes a tool the buyer
-     calls); for each, its intake (step 3) and pricing (**Pricing** below).
+   - **Services** — its 2–4 concrete offerings (each becomes a tool the buyer
+     calls). Every service is built to ONE template — see **The service
+     template** below; walk it per service.
    - **External tools/data** it needs — each becomes an MCP server (step 5).
 2. **Scaffold** (writes `./agents/<name>/`):
    ```bash
@@ -46,27 +47,56 @@ An agent is a **bundle**: `SKILL.md` (its instructions/system prompt),
 3. **Write the system prompt.** Edit `./agents/<name>/SKILL.md` — its
    instructions, voice, and guardrails. Be explicit about when it should *stop
    and let the human expert step in* (that powers escalation). Remove every
-   `[TODO: …]`. Do NOT add client-intake instructions ("first ask for X") —
-   intake is declared in the manifest, not the prompt. Keep the SKILL.md pure
-   expertise.
+   `[TODO: …]`. Do NOT add client-intake instructions ("first ask for X"),
+   lifecycle notes, or pricing prose — those are declared in the manifest,
+   not the prompt. Keep the SKILL.md pure expertise.
 
-   **Intake — ask the expert what they need from a client.** For each tool,
-   interview the expert: "what must you know from the client before you can
-   start this job?" Declare it on the skill (up to 5 questions):
+## The service template (walk this per service — all four facets REQUIRED)
+
+Every service ships four declared facets; `validate` (and staging) REJECTS a
+service missing any of them. Interview the expert in this order:
+
+1. **Deliverable** — one sentence: what does the client get? (→ the service's
+   `description`.)
+2. **Intake** — "what must you know from the client before you can start?"
+   Up to 5 questions. The platform pauses the run with EXACTLY these
+   questions before any compute is spent, and the default is STRICT: they
+   are always put to the human. Only if the expert explicitly accepts
+   client-app-supplied answers (e.g. a URL already in the conversation), set
+   `"upfront": true`. Separately, any service can pause mid-run to ask for
+   essential facts the intake didn't cover — that protocol is
+   platform-injected; nothing bills until the final deliverable.
+3. **Duration** — "how long does a typical run take?" → `expected_duration`
+   (`"90s"`, `"5m"`, `"1h"`; must be 5s–2h). It paces the client's polling
+   from the very first run; observed run history takes over automatically.
+4. **Rubric** — the public definition of done, REQUIRED for every service.
+   Best sourced from a known-good example deliverable: ask for one, analyze
+   what makes it good, and write objective, criterion-per-line markdown in
+   `rubrics/<service-id>.md`. It appears on the agent card as the service's
+   promise; success-fee services are additionally GRADED against it.
+5. **Pricing** — pick a billing mode (see **Pricing** below): `flat`
+   (sticker charged on completion), `success_fee` (sticker charged only on a
+   satisfied grader verdict; escalates to the expert when unsatisfied), or
+   `usage` (multiple × compute, no sticker).
+6. **Execution** — model pin or a `steps` pipeline, scripts. Internal; never
+   shown to buyers.
+
+   A complete service entry:
 
    ```json
-   { "id": "review", "description": "Review a website.",
-     "intake": ["What is the site URL?", "What does the business do?",
-                "Who is your ideal customer?", "How does it make money?"] }
+   {
+     "id": "review", "name": "Review a website",
+     "description": "Full conversion/UX/SEO audit of a production site.",
+     "intake": { "questions": ["What is the site URL?", "What does the business do?",
+                              "Who is your ideal customer?", "How does it make money?"],
+                 "upfront": false },
+     "expected_duration": "8m",
+     "rubric_file": "rubrics/review.md",
+     "billing": "success_fee",
+     "price_credits": 300,
+     "model": "claude-sonnet-5"
+   }
    ```
-
-   The platform pauses the run with EXACTLY these questions before any
-   compute is spent; a well-prepared client can pass the answers upfront and
-   skip the pause. If the expert wants the questions ALWAYS put to the human
-   (client assumptions not accepted), use the strict form:
-   `"intake": {"questions": [...], "upfront": false}`. Separately, any named tool can also pause mid-run to ask
-   for essential facts the intake didn't cover — that protocol is
-   platform-injected too. Nothing bills until the final deliverable.
 4. **Fill the manifest.** Edit `./agents/<name>/.codex-plugin/plugin.json`:
    `display_name`, `description`, `tags`, `free_credits_grant`, and the `skills`
    array (each `id` + `description` becomes a tool). Price each tool and choose
@@ -119,12 +149,21 @@ Each skill **is a priced tool** — the unit the buyer clicks and pays for. Get
 three things right per tool: its **price**, its **model(s)**, and where **scripts**
 do the deterministic work.
 
-**Price (`price_credits`).** The flat sticker the buyer pays, in credits (1 credit
-= 1¢). The platform takes **20% off the top**; the expert nets `sticker × 0.8 −
+**Billing modes (`billing`, explicit on every service).**
+- `"flat"` + `price_credits` — the sticker charges on every completed run.
+- `"success_fee"` + `price_credits` — the sticker charges ONLY when an
+  independent grader marks the deliverable satisfied against the service's
+  rubric (see **Outcome pricing** below). Higher floor; unsatisfied runs are
+  free for the buyer and escalate to the expert.
+- `"usage"` — no sticker; bills a multiple of the run's compute (like the
+  free-form `ask` tool). Good for cheap sample/hook services.
+
+**Price (`price_credits`).** The sticker in credits (1 credit = 1¢). The
+platform takes **20% off the top**; the expert nets `sticker × 0.8 −
 compute`. A tool can't publish below its **floor** = `compute(p95) / (1 − 0.20)`.
-Run `newb agent validate` (the CLI validator) to print each tool's floor,
-estimated compute, a suggested price (≈9× compute), and take-home. Omit
-`price_credits` to bill usage-based instead (like a free-form `ask` tool).
+Run `newb agent validate` (the CLI validator) or the `validate_agent` MCP tool
+to print each service's floor, estimated compute, a suggested price
+(≈9× compute), and take-home.
 
 **"Free to try" is `free_credits_grant`, NOT `price_credits: 0`.** A `0`-priced
 tool that still calls a model is below floor and gets rejected. Instead give new
@@ -198,8 +237,12 @@ keep `ask`-like tools usage-based.
 ```json
 "skills": [{
   "id": "dcf_model", "name": "DCF model", "description": "Build a DCF model as .xlsx.",
+  "billing": "success_fee",
   "price_credits": 2500,
-  "outcome": { "rubric_file": "rubrics/dcf_model.md", "max_iterations": 3 }
+  "rubric_file": "rubrics/dcf_model.md",
+  "max_iterations": 3,
+  "expected_duration": "10m",
+  "intake": { "questions": ["Which company, and which fiscal years?"], "upfront": false }
 }]
 ```
 
@@ -207,10 +250,12 @@ keep `ask`-like tools usage-based.
 raise the success rate but burn more compute per run — compute the expert pays
 for even when the run fails. An optional `"grader_model"` overrides the
 platform's default (a cheap model; grading is classification, not generation).
-An outcome tool **requires** a positive `price_credits`, and its floor is
-higher than a flat tool's: `max_iterations × (compute + grader) / (1 − 20%)` —
+A success-fee service **requires** a positive `price_credits`, and its floor is
+higher than a flat one's: `max_iterations × (compute + grader) / (1 − 20%)` —
 `validate` prints it. Steps pipelines and classic tools can both be
-outcome-priced; the loop wraps whichever the tool uses.
+success-fee billed; the loop wraps whichever the tool uses. (The older nested
+`"outcome": {...}` form still parses but is deprecated — use the service-level
+fields above.)
 
 **Your tools = MCP servers (`.mcp.json`).** The live data/tools your agent uses.
 Point at an external package (`npx -y <pkg>`) OR ship your own self-contained
@@ -304,4 +349,8 @@ publishes on the platform LLM.)
 - Never leave `[TODO: …]` in a published bundle (`validate` blocks it).
 - The name must be lowercase hyphen-case (a-z, 0-9, `-`), 1–64 chars.
 - Every skill needs a non-empty `id` and `description`.
+- **Every service must declare all four facets** — `intake`,
+  `expected_duration`, `rubric_file`, and an explicit `billing` — `validate`
+  and staging both reject incomplete services. Walk the service template for
+  each one; completeness IS the publish gate.
 - The `SKILL.md` body must be non-empty — it is the agent's system prompt.
