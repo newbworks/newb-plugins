@@ -62,7 +62,9 @@ An agent is a **bundle**: `SKILL.md` (its instructions/system prompt),
 
    The platform pauses the run with EXACTLY these questions before any
    compute is spent; a well-prepared client can pass the answers upfront and
-   skip the pause. Separately, any named tool can also pause mid-run to ask
+   skip the pause. If the expert wants the questions ALWAYS put to the human
+   (client assumptions not accepted), use the strict form:
+   `"intake": {"questions": [...], "upfront": false}`. Separately, any named tool can also pause mid-run to ask
    for essential facts the intake didn't cover — that protocol is
    platform-injected too. Nothing bills until the final deliverable.
 4. **Fill the manifest.** Edit `./agents/<name>/.codex-plugin/plugin.json`:
