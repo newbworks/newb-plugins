@@ -23,6 +23,24 @@
       ]
     },
     {
+      "name": "shal",
+      "source": "./shal-claude",
+      "description": "Reviews websites with a standards-based framework, visualizes an improved concept, then builds and deploys polished changes through GitHub and Vercel.",
+      "version": "0.2.2",
+      "homepage": "https://newb.works",
+      "repository": "https://github.com/newbworks/newb-plugins",
+      "license": "MIT",
+      "category": "Development",
+      "tags": [
+        "web-development",
+        "website-audit",
+        "ux",
+        "accessibility",
+        "vercel",
+        "github"
+      ]
+    },
+    {
       "name": "ymgrad-demo",
       "source": "./ymgrad-demo-claude",
       "description": "DEMO study-abroad admissions counselor (YMGrad-style): India-anchored and honest about your real chances at US master's programs. Uses clearly-labeled fictional sample data.",

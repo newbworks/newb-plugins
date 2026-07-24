@@ -1,0 +1,32 @@
+{
+  "name": "shal",
+  "version": "0.2.2",
+  "description": "Reviews websites with a standards-based framework, visualizes an improved concept, then builds and deploys polished changes through GitHub and Vercel.",
+  "author": {
+    "name": "newb.works",
+    "url": "https://newb.works"
+  },
+  "homepage": "https://newb.works",
+  "repository": "https://github.com/newbworks/newb-plugins",
+  "license": "MIT",
+  "keywords": [
+    "web-development",
+    "website-audit",
+    "ux",
+    "accessibility",
+    "vercel",
+    "github"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "shal",
+    "shortDescription": "Reviews websites with a standards-based framework, visualizes an improved concept, then builds and deploys polished changes through GitHub and Vercel.",
+    "longDescription": "Reviews websites with a standards-based framework, visualizes an improved concept, then builds and deploys polished changes through GitHub and Vercel. Runs hosted; install to use it.",
+    "developerName": "newb.works",
+    "category": "Development",
+    "websiteURL": "https://newb.works",
+    "logo": "./assets/logo.jpg",
+    "composerIcon": "./assets/logo.jpg"
+  }
+}

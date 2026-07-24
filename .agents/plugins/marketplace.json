@@ -18,6 +18,19 @@
       "description": "Build and publish your own expert agent to the newb marketplace."
     },
     {
+      "name": "shal",
+      "source": {
+        "source": "local",
+        "path": "./shal-codex"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Development",
+      "description": "Reviews websites with a standards-based framework, visualizes an improved concept, then builds and deploys polished changes through GitHub and Vercel."
+    },
+    {
       "name": "ymgrad-demo",
       "source": {
         "source": "local",

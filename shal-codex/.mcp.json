@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "shal": {
+      "type": "http",
+      "url": "https://agents.newb.works/mcp/shal/"
+    }
+  }
+}
