@@ -29,8 +29,14 @@ import subprocess
 import sys
 from pathlib import Path
 
-# Where to install from. newb is not on PyPI yet, so the default is the repo;
-# override to pin a fork, a tag, or a local checkout.
+# Where to install from. newb is not on PyPI yet, so the default is the repo.
+# Override to pin a fork or a tag — or to point at a local checkout, which is
+# what anyone working ON newb wants:
+#
+#   NEWB_DEV_INSTALL_SPEC="-e /path/to/newb"
+#
+# The value is shell-split, so multi-word specs like `-e <path>` work; an
+# editable install means repo edits reach the dev server with no reinstall.
 DEFAULT_SPEC = os.environ.get(
     "NEWB_DEV_INSTALL_SPEC", "git+https://github.com/newbworks/newb.git")
 VENV_DIR = Path(os.environ.get(
@@ -85,9 +91,12 @@ def ensure_venv() -> Path:
     python = venv_bin("python")
     if not python.is_file():  # some builds only ship python3
         python = venv_bin("python3")
+    import shlex
+
     try:
         proc = subprocess.run(
-            [str(python), "-m", "pip", "install", "--quiet", DEFAULT_SPEC],
+            [str(python), "-m", "pip", "install", "--quiet",
+             *shlex.split(DEFAULT_SPEC)],
             capture_output=True, text=True, timeout=900,
         )
     except subprocess.TimeoutExpired:
