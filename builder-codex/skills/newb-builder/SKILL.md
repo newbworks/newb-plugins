@@ -330,21 +330,25 @@ sandbox. Accepts png/jpeg/webp/gif/svg + pdf, up to 8 MB. Put the returned
 
 ## Update an existing agent
 
+**If the expert names an agent that already exists, fetch its source — do NOT
+start the new-agent interview.** "Run shal on dev" means: get `shal`'s source
+and load it, not scaffold a fresh agent.
+
 Your environment is often a fresh sandbox with no copy of the agent's source —
-never rebuild from memory. Pull the CURRENT source first.
+never rebuild from memory. Two steps, and **no second sign-in**: connecting the
+`newb-marketplace` connector already signed the expert in.
 
-**Easiest: `dev_pull <slug>`.** It signs the expert in, verifies they own the
-agent, downloads the source, and loads it — so they land ready to `dev_call` it
-against their own MCP servers. Their production MCP credentials are NOT
-downloaded; the local run uses their own connected servers, and anything left
-over gets a blank `.env.example`. Edit, `dev_call` to check the change, then
-`dev_check` and publish.
+1. **`get_agent_source(<slug>)`** on the `newb-marketplace` connector
+   (owner-gated). Returns the active bundle as `content_base64` + `sha256`.
+2. **`dev_install(<slug>, <content_base64>, sha256=<sha256>)`** on `newb-dev`.
+   It verifies the digest, extracts, and loads the bundle — leaving the expert
+   ready to `dev_call` it against their own MCP servers. Production MCP
+   credentials are not in the bundle and are not needed: the local run uses
+   what they have connected in Claude Code, and anything left over gets a blank
+   `.env.example`.
 
-Without the dev server, the `newb-marketplace` MCP tool **`get_agent_source`**
-(owner-gated: sign in as the account that published it) returns the active
-bundle as a base64 .tar.gz to decode and extract by hand. Either way: make the
-edits, then `validate_agent` and publish as below — same slug, so it stages as
-the next version. The
+Then edit, `dev_call` to check the change, `dev_check` before shipping, and
+publish. Same slug, so it stages as the next version. The
 `edit_agent` tool covers only config (LLM, creds, price multiple, logo) via
 the configure page; everything else — SKILL.md, skills/stickers/steps,
 rubrics, scripts, .mcp.json — is a source edit + re-publish.
