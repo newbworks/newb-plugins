@@ -4,6 +4,11 @@
       "type": "http",
       "url": "https://agents.newb.works/mcp/builder/",
       "note": "The builder's marketplace connector (lobby OAuth): browse with search_agents / get_agent, publish with request_publish. Connecting this server IS the sign-in — there is no separate publish auth."
+    },
+    "newb-dev": {
+      "command": "python3",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/scripts/dev_bootstrap.py"],
+      "note": "Run the expert's agent LOCALLY, before publishing: dev_use to point at a bundle, dev_call to talk to it as a customer would, dev_check to prove it stands on its own declarations, dev_pull to fetch one you already published. First launch installs the dev server and is slow; later launches are instant."
     }
   }
 }
