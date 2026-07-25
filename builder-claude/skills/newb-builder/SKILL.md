@@ -142,6 +142,22 @@ image and reference it by URL (same rule as agent output images below).
    Staging enforces the same checks server-side, so an invalid bundle is
    rejected at upload with the same messages — validate first to avoid the
    round-trip.
+7. **Run it locally — do this before publishing.** Call **`dev_use`** with the
+   bundle directory. It validates, shows each tool's price against its publish
+   floor, and reports how every MCP server the bundle declares will be
+   satisfied. Then **`dev_call`** talks to the agent exactly as a customer
+   would — on the expert's own Claude Code subscription and their own connected
+   MCP servers, so iterating is free and no credentials are copied anywhere.
+
+   The run takes the same path production does, so the intake pause and clarify
+   protocol fire for real; when one does, relay the questions and answer with
+   **`dev_answer`**. SKILL.md edits are live on the next `dev_call` — no
+   re-`dev_use`. Use **`dev_report`** to see what runs cost and whether each
+   tool clears its floor yet.
+
+   If `dev_use` says a server is unresolved, `dev_call` refuses: the run would
+   not match production. Connect that server in Claude Code (reusable for every
+   agent) or add its variable to a `.env` beside the bundle.
 
 ## Pricing & advanced tools
 
@@ -315,16 +331,31 @@ sandbox. Accepts png/jpeg/webp/gif/svg + pdf, up to 8 MB. Put the returned
 ## Update an existing agent
 
 Your environment is often a fresh sandbox with no copy of the agent's source —
-never rebuild from memory. Pull the CURRENT source first with the
-`newb-marketplace` MCP tool **`get_agent_source`** (owner-gated: sign in as
-the account that published it): it returns the active bundle as a base64
-.tar.gz. Decode + extract it, make the edits, then `validate_agent` and
-publish as below — same slug, so it stages as the next version. The
+never rebuild from memory. Pull the CURRENT source first.
+
+**Easiest: `dev_pull <slug>`.** It signs the expert in, verifies they own the
+agent, downloads the source, and loads it — so they land ready to `dev_call` it
+against their own MCP servers. Their production MCP credentials are NOT
+downloaded; the local run uses their own connected servers, and anything left
+over gets a blank `.env.example`. Edit, `dev_call` to check the change, then
+`dev_check` and publish.
+
+Without the dev server, the `newb-marketplace` MCP tool **`get_agent_source`**
+(owner-gated: sign in as the account that published it) returns the active
+bundle as a base64 .tar.gz to decode and extract by hand. Either way: make the
+edits, then `validate_agent` and publish as below — same slug, so it stages as
+the next version. The
 `edit_agent` tool covers only config (LLM, creds, price multiple, logo) via
 the configure page; everything else — SKILL.md, skills/stickers/steps,
 rubrics, scripts, .mcp.json — is a source edit + re-publish.
 
 ## Publish = sign in, stage, then configure to go live
+
+Before publishing, run **`dev_check`** with a realistic prompt. It runs against
+ONLY the servers the bundle declares — nothing borrowed from the expert's own
+Claude Code — which is exactly the production surface. A pass means the
+bundle's `.mcp.json` really describes what the agent needs; a failure now is
+one the buyer would otherwise hit first.
 
 ```bash
 python3 scripts/publish_agent.py ./agents/<name>
