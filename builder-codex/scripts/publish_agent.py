@@ -51,19 +51,89 @@ _TAR_EXCLUDE_NAMES = {
 _TAR_EXCLUDE_SUFFIXES = (".pyc", ".log", ".bak")
 
 
-def _tar_filter(tarinfo: tarfile.TarInfo) -> "tarfile.TarInfo | None":
-    parts = tarinfo.name.split("/")
+def _denylisted(rel_posix_path: str) -> bool:
+    parts = rel_posix_path.split("/")
     if any(p in _TAR_EXCLUDE_NAMES for p in parts):
-        return None
-    if tarinfo.name.endswith(_TAR_EXCLUDE_SUFFIXES):
-        return None
-    return tarinfo
+        return True
+    return rel_posix_path.endswith(_TAR_EXCLUDE_SUFFIXES)
+
+
+# Directories where a bundle conventionally ships MULTIPLE files the
+# manifest never names individually — mirrors bundle.py's
+# BUNDLE_CONVENTIONAL_DIRS, duplicated here since this script must stay
+# stdlib-only (no import of the full newb.marketplace.bundle module, which
+# pulls in pydantic and the rest of the package).
+_CONVENTIONAL_DIRS = {"scripts", "examples", "assets", "rubrics"}
+
+
+def _declared_paths(d: Path) -> set:
+    """Bundle-relative paths this bundle's OWN manifest names by exact path
+    — plain json.load, not the real bundle loader, so a malformed manifest
+    just yields the base set rather than raising (the real validation
+    happens server-side at ingest anyway). Mirrors bundle.py's
+    bundle_declared_paths."""
+    paths = {"SKILL.md", ".mcp.json", ".codex-plugin/plugin.json", "plugin.json",
+             ".env.example"}
+    manifest_path = d / ".codex-plugin" / "plugin.json"
+    if not manifest_path.is_file():
+        manifest_path = d / "plugin.json"
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return paths
+    ext = manifest.get("newb") if isinstance(manifest, dict) else None
+    for skill in (ext or {}).get("skills") or []:
+        if not isinstance(skill, dict):
+            continue
+        rf = str(skill.get("rubric_file") or "").strip()
+        if rf:
+            paths.add(rf)
+        outcome = skill.get("outcome")
+        if isinstance(outcome, dict):
+            orf = str(outcome.get("rubric_file") or "").strip()
+            if orf:
+                paths.add(orf)
+    logo = str((ext or {}).get("logo") or "").strip()
+    if logo and not logo.startswith(("http://", "https://")):
+        paths.add(logo)
+    return paths
+
+
+def _tar_filter_for(d: Path):
+    """Same rule as bundle.py's bundle_tar_filter_for: a denylist of known
+    debris/secrets, THEN an allowlist of what the manifest actually declares
+    (or a conventional directory) — a denylist alone can't enumerate every
+    tool's every write path (observed: Playwright's browser_take_screenshot,
+    given an explicit filename, writes relative to cwd, bypassing
+    --output-dir entirely). Directory entries are excluded ONLY by the
+    denylist: tarfile.add does not recurse into a directory whose own entry
+    the filter excludes, so excluding e.g. `.codex-plugin/` on the
+    allowlist check alone would silently prune `.codex-plugin/plugin.json`
+    right along with it."""
+    declared = _declared_paths(d)
+
+    def _filter(tarinfo: tarfile.TarInfo) -> "tarfile.TarInfo | None":
+        if _denylisted(tarinfo.name):
+            return None
+        if tarinfo.isdir():
+            return tarinfo
+        norm = tarinfo.name
+        while norm.startswith("./"):
+            norm = norm[2:]
+        if not norm or norm == ".":
+            return tarinfo
+        if norm in declared:
+            return tarinfo
+        top = norm.split("/", 1)[0]
+        return tarinfo if top in _CONVENTIONAL_DIRS else None
+
+    return _filter
 
 
 def _tar_bundle(d: Path) -> bytes:
     buf = io.BytesIO()
     with tarfile.open(fileobj=buf, mode="w:gz") as tf:
-        tf.add(str(d), arcname=".", filter=_tar_filter)
+        tf.add(str(d), arcname=".", filter=_tar_filter_for(d))
     return buf.getvalue()
 
 
