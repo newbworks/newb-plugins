@@ -6,7 +6,7 @@
     "name": "newb.works",
     "url": "https://newb.works"
   },
-  "homepage": "https://newb.works",
+  "homepage": "https://marketplace.newb.works/marketplace/agents/shal",
   "repository": "https://github.com/newbworks/newb-plugins",
   "license": "MIT",
   "keywords": [
@@ -25,7 +25,7 @@
     "longDescription": "Reviews websites with a standards-based framework, visualizes an improved concept, then builds and deploys polished changes through GitHub and Vercel. Runs hosted; install to use it.",
     "developerName": "newb.works",
     "category": "Development",
-    "websiteURL": "https://newb.works",
+    "websiteURL": "https://marketplace.newb.works/marketplace/agents/shal",
     "logo": "./assets/logo.jpg",
     "composerIcon": "./assets/logo.jpg"
   }
