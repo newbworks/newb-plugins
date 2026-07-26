@@ -151,7 +151,14 @@ image and reference it by URL (same rule as agent output images below).
 
    The run takes the same path production does, so the intake pause and clarify
    protocol fire for real; when one does, relay the questions and answer with
-   **`dev_answer`**. SKILL.md edits are live on the next `dev_call` — no
+   **`dev_answer`**.
+
+   **A long tool will outlast the call.** A 15-minute service does not fit in
+   one tool response: `dev_call` or `dev_answer` will come back "still running"
+   with a task id, or the client may time out. The run is NOT lost — poll it
+   with **`dev_result`** and that task id. Never re-send `dev_answer` to retry;
+   the answers already landed, and re-answering just reports the run as still
+   in flight. SKILL.md edits are live on the next `dev_call` — no
    re-`dev_use`. Use **`dev_report`** to see what runs cost and whether each
    tool clears its floor yet.
 
