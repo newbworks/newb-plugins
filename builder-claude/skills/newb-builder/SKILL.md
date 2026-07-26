@@ -396,6 +396,15 @@ Do not report `publish` as "done" — the expert must finish on the configure pa
 (`--configure-platform` exists only for quick testing; it skips the page and
 publishes on the platform LLM.)
 
+**No shell access to the bundle's files (Cowork and similar sandboxes)?**
+`dev_use`/`dev_call` reaching the bundle proves `newb-dev` has full local file
+access even when you don't — you have MCP tools, not a terminal on that same
+host. Call **`dev_prepare_publish`** instead of the script: it tars the loaded
+bundle in-process and returns its sha256 (+ base64, if small enough). Pass
+`content_base64` straight to `publish_bundle` on the newb-marketplace
+connector — no `--prepare`/`--emit-b64`/local POST required. It refuses on
+uncommitted changes the same way the script does, unless `allow_dirty=true`.
+
 ## Rules
 
 - Never leave `[TODO: …]` in a published bundle (`validate` blocks it).
