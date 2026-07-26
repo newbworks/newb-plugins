@@ -36,10 +36,34 @@ DEFAULT_HOST = "https://agents.newb.works"
 DEFAULT_LOBBY = "https://marketplace.newb.works"
 
 
+# Never shipped in a publish tarball: dev-only debris (nothing here writes to
+# the bundle directory on its own — a nested `claude -p` run's own tools do,
+# e.g. `.playwright-mcp/`'s trace/console logs defaulting to cwd, which is the
+# bundle folder itself in dev) and anything that could hold real credentials
+# (`.env`/`.env.local` — never `.env.example`, which is a safe, intentional
+# template). `tf.add` has no default exclusion at all, so without this filter
+# every stray file sitting in the folder — screenshots, secrets, or otherwise
+# — ships exactly as-is.
+_TAR_EXCLUDE_NAMES = {
+    "__pycache__", ".DS_Store", "node_modules", ".git", ".playwright-mcp",
+    ".env", ".env.local",
+}
+_TAR_EXCLUDE_SUFFIXES = (".pyc", ".log", ".bak")
+
+
+def _tar_filter(tarinfo: tarfile.TarInfo) -> "tarfile.TarInfo | None":
+    parts = tarinfo.name.split("/")
+    if any(p in _TAR_EXCLUDE_NAMES for p in parts):
+        return None
+    if tarinfo.name.endswith(_TAR_EXCLUDE_SUFFIXES):
+        return None
+    return tarinfo
+
+
 def _tar_bundle(d: Path) -> bytes:
     buf = io.BytesIO()
     with tarfile.open(fileobj=buf, mode="w:gz") as tf:
-        tf.add(str(d), arcname=".")
+        tf.add(str(d), arcname=".", filter=_tar_filter)
     return buf.getvalue()
 
 
