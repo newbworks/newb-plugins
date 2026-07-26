@@ -402,8 +402,20 @@ access even when you don't — you have MCP tools, not a terminal on that same
 host. Call **`dev_prepare_publish`** instead of the script: it tars the loaded
 bundle in-process and returns its sha256 (+ base64, if small enough). Pass
 `content_base64` straight to `publish_bundle` on the newb-marketplace
-connector — no `--prepare`/`--emit-b64`/local POST required. It refuses on
-uncommitted changes the same way the script does, unless `allow_dirty=true`.
+connector — no `--prepare`/`--emit-b64`/local POST required. It does not care
+about local git state: the upload route commits this exact source into
+`agents/<slug>/` on every publish regardless (see below), so there is nothing
+to gate on.
+
+**Version control is server-side, not local.** The upload route
+(`lobby/lib/bundle-archive.ts`) commits the published source into
+`newbworks/newb`'s `agents/<slug>/` via the GitHub Git Data API on every
+publish — one clean commit, deduped if identical — independent of whatever
+git state the expert's own machine is in. Don't reintroduce a local
+uncommitted-changes gate on publish: it protects against a risk that doesn't
+exist (the server's archive is unconditional), and it makes the
+sandbox-safe path above unusable, since a shell-less sandbox can never
+satisfy "commit locally first" anyway.
 
 ## Rules
 
