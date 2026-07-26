@@ -345,9 +345,19 @@ Your environment is often a fresh sandbox with no copy of the agent's source —
 never rebuild from memory. Two steps, and **no second sign-in**: connecting the
 `newb-marketplace` connector already signed the expert in.
 
+0. **`dev_use(<slug>)` FIRST.** If the bundle is already on disk (e.g.
+   `./agents/<slug>`) this loads it instantly — nothing to fetch. This is the
+   normal case for an expert working on their own agent, and it preserves the
+   local edits they are here to test. Only continue if it says no bundle was
+   found, or you need to check whether the published copy is newer.
 1. **`get_agent_source(<slug>)`** on the `newb-marketplace` connector
-   (owner-gated). Returns the active bundle as `content_base64` + `sha256`.
-2. **`dev_install(<slug>, <content_base64>, sha256=<sha256>)`** on `newb-dev`.
+   (owner-gated). Returns the bundle as `content_base64` + `sha256` +
+   `version`.
+2. **`dev_install(<slug>, <content_base64>, sha256=…, version=…)`** on
+   `newb-dev`. Always pass `version` — with a local copy present it compares:
+   same version means it is used as-is with nothing transferred, a different
+   one means the published copy replaces it, and uncommitted local work blocks
+   the replace until you commit or force it.
    It verifies the digest, extracts, and loads the bundle — leaving the expert
    ready to `dev_call` it against their own MCP servers. Production MCP
    credentials are not in the bundle and are not needed: the local run uses
