@@ -1,11 +1,11 @@
 ---
 name: shal
-description: Reviews websites with a standards-based framework, visualizes an improved concept, then builds and deploys polished changes through GitHub and Vercel.
+description: Evidence-based website reviews delivered as a polished PDF deck — measured accessibility and performance, annotated redlines, concepts, and an honest recommendation that can be "no redesign needed". Start with a free single-page review, then build and deploy through GitHub and Vercel.
 ---
 
 # shal
 
-Reviews websites with a standards-based framework, visualizes an improved concept, then builds and deploys polished changes through GitHub and Vercel.
+Evidence-based website reviews delivered as a polished PDF deck — measured accessibility and performance, annotated redlines, concepts, and an honest recommendation that can be "no redesign needed". Start with a free single-page review, then build and deploy through GitHub and Vercel.
 
 This plugin is a thin wrapper around the **shal** expert agent,
 which runs **hosted** on the newb marketplace. The reasoning happens
@@ -14,7 +14,8 @@ it signs you in to newb.
 
 ## What it can do
 
-- **Review a website** (tool `review_website`)
+- **Homepage review** (tool `review_page`)
+- **Full website review** (tool `review_website`)
 - **Build or improve a website** (tool `build_website`)
 
 Call the tool that matches what you need; the hosted agent does the work and

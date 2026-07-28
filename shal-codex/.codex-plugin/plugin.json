@@ -1,7 +1,7 @@
 {
   "name": "shal",
-  "version": "0.3.1",
-  "description": "Reviews websites with a standards-based framework, visualizes an improved concept, then builds and deploys polished changes through GitHub and Vercel.",
+  "version": "0.5.0",
+  "description": "Evidence-based website reviews delivered as a polished PDF deck \u2014 measured accessibility and performance, annotated redlines, concepts, and an honest recommendation that can be \"no redesign needed\". Start with a free single-page review, then build and deploy through GitHub and Vercel.",
   "author": {
     "name": "newb.works",
     "url": "https://newb.works"
@@ -21,8 +21,8 @@
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "shal",
-    "shortDescription": "Reviews websites with a standards-based framework, visualizes an improved concept, then builds and deploys polished changes through GitHub and Vercel.",
-    "longDescription": "Reviews websites with a standards-based framework, visualizes an improved concept, then builds and deploys polished changes through GitHub and Vercel. Runs hosted; install to use it.",
+    "shortDescription": "Evidence-based website reviews delivered as a polished PDF deck \u2014 measured accessibility and performance, annotated redlines, concepts, and an honest recommendation that can be \"no redesign needed\". Start with a free single-page review, then build and deploy through GitHub and Vercel.",
+    "longDescription": "Evidence-based website reviews delivered as a polished PDF deck \u2014 measured accessibility and performance, annotated redlines, concepts, and an honest recommendation that can be \"no redesign needed\". Start with a free single-page review, then build and deploy through GitHub and Vercel. Runs hosted; install to use it.",
     "developerName": "newb.works",
     "category": "Development",
     "websiteURL": "https://marketplace.newb.works/marketplace/agents/shal",
