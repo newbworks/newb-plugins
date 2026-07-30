@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
 """Validate an expert-agent bundle and print its derived A2A Agent Card.
 
-Uses the real loader (newb.marketplace.bundle) so validation matches what
-the executor enforces at publish time. Also flags leftover [TODO …]
-placeholders.
+Runs the SAME checks `newb agent validate` and the `dev_use` MCP tool run —
+not a lighter local-only pass. Beyond loading the bundle (the real loader, so
+this matches what the executor enforces at publish), that means: leftover
+[TODO …] placeholders, SKILL.md compactness, skill id/description coherence,
+the v3 publish floor, the v2 service template (intake/duration/rubric/
+billing on every skill), rubric compactness, and every pinned model —
+`model`, `steps[].model`, `grader_model` — checked against the AI Gateway's
+live catalog (retired, unknown, non-language, or missing tool-use support
+for a classic tool in an MCP-bearing bundle).
 
     python3 validate_agent.py <bundle-dir>
 """
@@ -21,23 +27,6 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 
-def find_todos(root: Path) -> list[str]:
-    hits: list[str] = []
-    for path in root.rglob("*"):
-        if not path.is_file():
-            continue
-        if path.suffix.lower() not in {".md", ".json"}:
-            continue
-        try:
-            text = path.read_text(encoding="utf-8")
-        except (OSError, UnicodeDecodeError):
-            continue
-        for i, line in enumerate(text.splitlines(), 1):
-            if "[TODO" in line or "TODO-tool-name" in line or "TODO_API_KEY" in line:
-                hits.append(f"{path.relative_to(root)}:{i}: {line.strip()}")
-    return hits
-
-
 def main() -> int:
     if len(sys.argv) != 2:
         print("usage: validate_agent.py <bundle-dir>", file=sys.stderr)
@@ -46,23 +35,17 @@ def main() -> int:
     root = Path(sys.argv[1])
 
     try:
-        from newb.marketplace.bundle import BundleError, load_bundle
+        from newb.marketplace.scaffold import validate_bundle
     except ImportError as exc:  # pragma: no cover - environment issue
-        print(f"error: could not import newb.marketplace.bundle: {exc}", file=sys.stderr)
+        print(f"error: could not import newb.marketplace.scaffold: {exc}", file=sys.stderr)
         print("Run from the newb repo (or ensure it is on PYTHONPATH).", file=sys.stderr)
         return 2
 
-    try:
-        bundle = load_bundle(root)
-    except BundleError as exc:
-        print(f"INVALID: {exc}", file=sys.stderr)
-        return 1
-
-    todos = find_todos(root)
-    if todos:
-        print("INVALID: unfilled placeholders remain:", file=sys.stderr)
-        for t in todos:
-            print(f"  {t}", file=sys.stderr)
+    ok, problems, bundle = validate_bundle(root)
+    for p in problems:  # errors + warning:-prefixed advisories, same order validate_bundle found them
+        print(p, file=sys.stderr)
+    if not ok:
+        print("INVALID: bundle is not valid — fix the errors above.", file=sys.stderr)
         return 1
 
     m = bundle.manifest

@@ -99,41 +99,44 @@ def _declared_paths(d: Path) -> set:
     return paths
 
 
-def _tar_filter_for(d: Path):
-    """Same rule as bundle.py's bundle_tar_filter_for: a denylist of known
-    debris/secrets, THEN an allowlist of what the manifest actually declares
-    (or a conventional directory) — a denylist alone can't enumerate every
-    tool's every write path (observed: Playwright's browser_take_screenshot,
-    given an explicit filename, writes relative to cwd, bypassing
-    --output-dir entirely). Directory entries are excluded ONLY by the
-    denylist: tarfile.add does not recurse into a directory whose own entry
-    the filter excludes, so excluding e.g. `.codex-plugin/` on the
-    allowlist check alone would silently prune `.codex-plugin/plugin.json`
-    right along with it."""
+def _tar_filter(tarinfo: tarfile.TarInfo) -> "tarfile.TarInfo | None":
+    """Same rule as bundle.py's bundle_tar_filter: denylist only — known
+    debris/secrets never ship, everything else does. This used to ALSO
+    exclude anything not individually declared by the manifest or sitting
+    under a conventional directory (scripts/examples/assets/rubrics); that
+    silently dropped legitimate, just-not-conventionally-named directories
+    with zero warning (shal's own templates/deck.html and templates/deck.css
+    vanished on every publish). See _notable_paths for the non-blocking
+    replacement — surfaced as a warning, not an exclusion."""
+    return None if _denylisted(tarinfo.name) else tarinfo
+
+
+def _notable_paths(d: Path) -> list[str]:
+    """Files under ``d`` that ship (survive ``_tar_filter``) but aren't part
+    of the bundle's recognized structure — not named by the manifest, and
+    not under a conventional directory. Mirrors bundle.py's
+    bundle_notable_paths; not used to exclude anything, only to warn."""
     declared = _declared_paths(d)
-
-    def _filter(tarinfo: tarfile.TarInfo) -> "tarfile.TarInfo | None":
-        if _denylisted(tarinfo.name):
-            return None
-        if tarinfo.isdir():
-            return tarinfo
-        norm = tarinfo.name
-        while norm.startswith("./"):
-            norm = norm[2:]
-        if not norm or norm == ".":
-            return tarinfo
-        if norm in declared:
-            return tarinfo
-        top = norm.split("/", 1)[0]
-        return tarinfo if top in _CONVENTIONAL_DIRS else None
-
-    return _filter
+    notable = []
+    for path in sorted(d.rglob("*")):
+        if not path.is_file():
+            continue
+        rel = path.relative_to(d).as_posix()
+        if _denylisted(rel):
+            continue
+        if rel in declared:
+            continue
+        top = rel.split("/", 1)[0]
+        if top in _CONVENTIONAL_DIRS:
+            continue
+        notable.append(rel)
+    return notable
 
 
 def _tar_bundle(d: Path) -> bytes:
     buf = io.BytesIO()
     with tarfile.open(fileobj=buf, mode="w:gz") as tf:
-        tf.add(str(d), arcname=".", filter=_tar_filter_for(d))
+        tf.add(str(d), arcname=".", filter=_tar_filter)
     return buf.getvalue()
 
 
@@ -323,6 +326,12 @@ def main() -> None:
         sys.exit(f"not a bundle: {d}\n  need SKILL.md + .codex-plugin/plugin.json")
 
     slug = json.loads(manifest.read_text(encoding="utf-8"))["name"]
+    notable = _notable_paths(d)
+    if notable:
+        print("note: shipping paths not part of this bundle's declared/"
+              "conventional structure — check these are meant to ship:")
+        for p in notable:
+            print(f"  {p}")
     tar = _tar_bundle(d)
     lobby = args.lobby.rstrip("/")
 

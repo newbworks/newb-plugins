@@ -10,7 +10,7 @@
       "name": "newb-builder",
       "source": "./builder-claude",
       "description": "Build and publish your own expert agent to the newb marketplace.",
-      "version": "0.3.8",
+      "version": "0.3.9",
       "homepage": "https://newb.works",
       "repository": "https://github.com/newbworks/newb-plugins",
       "license": "MIT",

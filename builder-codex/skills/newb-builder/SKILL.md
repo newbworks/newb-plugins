@@ -100,7 +100,9 @@ service missing any of them. Interview the expert in this order:
 4. **Fill the manifest.** Edit `./agents/<name>/.codex-plugin/plugin.json`:
    `display_name`, `description`, `tags`, `free_credits_grant`, and the `skills`
    array (each `id` + `description` becomes a tool). Price each tool and choose
-   its model(s) — see **Pricing & advanced tools** below.
+   its model(s) — call **`dev_models`** to browse the AI Gateway's live catalog
+   (any provider, current prices, no key needed) — see **Pricing & advanced
+   tools** below.
 5. **Declare tools.** Edit `./agents/<name>/.mcp.json` with the MCP servers the
    agent needs (use `${ENV_VAR}` for secrets — authorize them when configuring).
 
@@ -172,6 +174,18 @@ Each skill **is a priced tool** — the unit the buyer clicks and pays for. Get
 three things right per tool: its **price**, its **model(s)**, and where **scripts**
 do the deterministic work.
 
+**Models run on the platform's AI Gateway — any provider, any model.** Every
+published agent's `model` (classic tools), `steps[].model`, and
+`grader_model` can be a Claude id (`claude-sonnet-5`) OR a gateway slug for
+any other provider (`deepseek/deepseek-v3.2`, `openai/gpt-5.4`,
+`google/gemini-2.5-pro`, …) — cheaper open-weight models keep more of the
+expert's margin on high-volume tools. **Browse real, current, correctly-priced
+options with the `dev_models` MCP tool** (or `newb agent models` from a
+shell) — no key needed, it reads the gateway's public catalog directly, shows
+USD per 1M tokens, and flags which models support tool-use (only relevant for
+a classic tool in a bundle that declares MCP servers — see below). Copy an id
+straight into a skill's or step's `model` field.
+
 **Billing modes (`billing`, explicit on every service).**
 - `"flat"` + `price_credits` — the sticker charges on every completed run.
 - `"success_fee"` + `price_credits` — the sticker charges ONLY when an
@@ -218,10 +232,14 @@ field**; a step missing `id` or `prompt` is **rejected at publish**. Always run
 
 Steps are **pure model calls** — they can't run a script or an MCP tool
 mid-pipeline. For a tool that needs your MCP tools or scripts, DON'T use `steps`:
-make it a classic tool and pin its model with `"model": "claude-sonnet-5"`.
-Use **current** model IDs (`claude-opus-4-8`, `claude-sonnet-5`,
-`claude-haiku-4-5`) — a retired or misspelled model is caught by `validate` and
-crashes at runtime, so never guess an ID.
+make it a classic tool and pin its model with `"model": "claude-sonnet-5"` (or
+any gateway slug — see above). **Because a classic tool's model runs inside
+Claude Code with your bundle's MCP servers attached, pick one the catalog
+marks as supporting tool-use** — `dev_models` shows this per model; `steps`
+and `grader_model` calls never see tools, so that requirement doesn't apply to
+them. Never guess an ID — a retired, misspelled, or non-existent one is
+caught by `validate`/`dev_use` and crashes at runtime; `dev_models` only
+shows ids that are real right now.
 
 **Push deterministic work into `scripts/`.** Cutoffs, parsing, scoring,
 validation, formatting — anything that isn't reasoning — belongs in a script (free
