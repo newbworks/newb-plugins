@@ -29,19 +29,6 @@
       },
       "category": "Development",
       "description": "Evidence-based website reviews delivered as a polished PDF deck \u2014 measured accessibility and performance, annotated redlines, concepts, and an honest recommendation that can be \"no redesign needed\". Start with a free single-page review, then build and deploy through GitHub and Vercel."
-    },
-    {
-      "name": "ymgrad-demo",
-      "source": {
-        "source": "local",
-        "path": "./ymgrad-demo-codex"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Education",
-      "description": "DEMO study-abroad admissions counselor (YMGrad-style): India-anchored and honest about your real chances at US master's programs. Uses clearly-labeled fictional sample data."
     }
   ]
 }

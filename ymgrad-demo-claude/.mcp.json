@@ -1,8 +1,0 @@
-{
-  "mcpServers": {
-    "ymgrad-demo": {
-      "type": "http",
-      "url": "https://agents.newb.works/mcp/ymgrad-demo/"
-    }
-  }
-}
