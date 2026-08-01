@@ -1,0 +1,31 @@
+{
+  "name": "idea-reviewer",
+  "version": "0.1.1",
+  "description": "See if your startup idea will win or lose against a specific thesis about the future.",
+  "author": {
+    "name": "newb.works",
+    "url": "https://newb.works"
+  },
+  "homepage": "https://marketplace.newb.works/marketplace/agents/idea-reviewer",
+  "repository": "https://github.com/newbworks/newb-plugins",
+  "license": "MIT",
+  "keywords": [
+    "startup",
+    "market prediction",
+    "idea validation",
+    "agentic commerce",
+    "consumer hardware"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "idea-reviewer",
+    "shortDescription": "See if your startup idea will win or lose against a specific thesis about the future.",
+    "longDescription": "See if your startup idea will win or lose against a specific thesis about the future. Runs hosted; install to use it.",
+    "developerName": "newb.works",
+    "category": "Startup",
+    "websiteURL": "https://marketplace.newb.works/marketplace/agents/idea-reviewer",
+    "logo": "./assets/logo.webp",
+    "composerIcon": "./assets/logo.webp"
+  }
+}

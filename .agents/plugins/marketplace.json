@@ -18,6 +18,19 @@
       "description": "Build and publish your own expert agent to the newb marketplace."
     },
     {
+      "name": "idea-reviewer",
+      "source": {
+        "source": "local",
+        "path": "./idea-reviewer-codex"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Startup",
+      "description": "See if your startup idea will win or lose against a specific thesis about the future."
+    },
+    {
       "name": "shal",
       "source": {
         "source": "local",

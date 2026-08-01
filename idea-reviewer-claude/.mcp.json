@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "idea-reviewer": {
+      "type": "http",
+      "url": "https://agents.newb.works/mcp/idea-reviewer/"
+    }
+  }
+}

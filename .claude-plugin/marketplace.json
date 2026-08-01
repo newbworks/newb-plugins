@@ -23,6 +23,23 @@
       ]
     },
     {
+      "name": "idea-reviewer",
+      "source": "./idea-reviewer-claude",
+      "description": "See if your startup idea will win or lose against a specific thesis about the future.",
+      "version": "0.1.1",
+      "homepage": "https://marketplace.newb.works/marketplace/agents/idea-reviewer",
+      "repository": "https://github.com/newbworks/newb-plugins",
+      "license": "MIT",
+      "category": "Startup",
+      "tags": [
+        "startup",
+        "market prediction",
+        "idea validation",
+        "agentic commerce",
+        "consumer hardware"
+      ]
+    },
+    {
       "name": "shal",
       "source": "./shal-claude",
       "description": "Evidence-based website reviews delivered as a polished PDF deck \u2014 measured accessibility and performance, annotated redlines, concepts, and an honest recommendation that can be \"no redesign needed\". Start with a free single-page review, then build and deploy through GitHub and Vercel.",
