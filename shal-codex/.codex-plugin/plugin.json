@@ -1,6 +1,6 @@
 {
   "name": "shal",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Evidence-based website reviews delivered as a polished PDF deck \u2014 measured accessibility and performance, annotated redlines, concepts, and an honest recommendation that can be \"no redesign needed\". Start with a free single-page review, then build and deploy through GitHub and Vercel.",
   "author": {
     "name": "newb.works",
