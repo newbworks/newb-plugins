@@ -1,0 +1,22 @@
+{
+  "name": "missdarcei-demo",
+  "displayName": "missdarcei-demo",
+  "version": "0.2.0",
+  "description": "Turn a selfie and beauty inspiration into an interactive, Visualize-ready Beauty Blueprint with a makeup preview, animated placement guide, and sourced kit.",
+  "author": {
+    "name": "newb.works",
+    "url": "https://newb.works"
+  },
+  "homepage": "https://marketplace.newb.works/marketplace/agents/missdarcei-demo",
+  "repository": "https://github.com/newbworks/newb-plugins",
+  "license": "MIT",
+  "keywords": [
+    "makeup",
+    "melanin-rich skin",
+    "K-beauty",
+    "virtual try-on",
+    "shade matching",
+    "beauty routine"
+  ],
+  "icon": "https://agents.newb.works/agents/missdarcei-demo/logo.svg"
+}

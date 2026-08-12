@@ -40,6 +40,24 @@
       ]
     },
     {
+      "name": "missdarcei-demo",
+      "source": "./missdarcei-demo-claude",
+      "description": "Turn a selfie and beauty inspiration into an interactive, Visualize-ready Beauty Blueprint with a makeup preview, animated placement guide, and sourced kit.",
+      "version": "0.2.0",
+      "homepage": "https://marketplace.newb.works/marketplace/agents/missdarcei-demo",
+      "repository": "https://github.com/newbworks/newb-plugins",
+      "license": "MIT",
+      "category": "Beauty & Personal Care",
+      "tags": [
+        "makeup",
+        "melanin-rich skin",
+        "K-beauty",
+        "virtual try-on",
+        "shade matching",
+        "beauty routine"
+      ]
+    },
+    {
       "name": "shal",
       "source": "./shal-claude",
       "description": "Evidence-based website reviews delivered as a polished PDF deck \u2014 measured accessibility and performance, annotated redlines, concepts, and an honest recommendation that can be \"no redesign needed\". Start with a free single-page review, then build and deploy through GitHub and Vercel.",

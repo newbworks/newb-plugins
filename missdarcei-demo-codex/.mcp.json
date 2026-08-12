@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "missdarcei-demo": {
+      "type": "http",
+      "url": "https://agents.newb.works/mcp/missdarcei-demo/"
+    }
+  }
+}
