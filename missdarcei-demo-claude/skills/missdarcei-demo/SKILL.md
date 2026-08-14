@@ -1,11 +1,11 @@
 ---
 name: missdarcei-demo
-description: Turn a selfie and beauty inspiration into an interactive, Visualize-ready Beauty Blueprint with a makeup preview, animated placement guide, and sourced kit.
+description: Turn a selfie and beauty inspiration into chat-previewed makeup simulations, annotated placement maps, and a sourced personalized plan.
 ---
 
 # missdarcei-demo
 
-Turn a selfie and beauty inspiration into an interactive, Visualize-ready Beauty Blueprint with a makeup preview, animated placement guide, and sourced kit.
+Turn a selfie and beauty inspiration into chat-previewed makeup simulations, annotated placement maps, and a sourced personalized plan.
 
 This plugin is a thin wrapper around the **missdarcei-demo** expert agent,
 which runs **hosted** on the newb marketplace. The reasoning happens

@@ -42,8 +42,8 @@
     {
       "name": "missdarcei-demo",
       "source": "./missdarcei-demo-claude",
-      "description": "Turn a selfie and beauty inspiration into an interactive, Visualize-ready Beauty Blueprint with a makeup preview, animated placement guide, and sourced kit.",
-      "version": "0.2.3",
+      "description": "Turn a selfie and beauty inspiration into chat-previewed makeup simulations, annotated placement maps, and a sourced personalized plan.",
+      "version": "0.2.4",
       "homepage": "https://marketplace.newb.works/marketplace/agents/missdarcei-demo",
       "repository": "https://github.com/newbworks/newb-plugins",
       "license": "MIT",
