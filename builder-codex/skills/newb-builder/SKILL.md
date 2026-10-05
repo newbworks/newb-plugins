@@ -246,6 +246,95 @@ validation, formatting — anything that isn't reasoning — belongs in a script
 to run, and it keeps model calls short and cheap). Reserve frontier models for the
 one or two genuinely hard steps per tool.
 
+## Workflow tools — durable, multi-stage process (LOCAL DEV, not publishable yet)
+
+When the expert's process has **shape** — parallel branches, a human sign-off
+gate, a long wait, conditional revision — a linear `steps` list can't express
+it. A **workflow tool** can: the bundle ships a `workflow.py` (plain Temporal
+workflow code YOU write for the expert — they describe the process, you
+translate), and a skill opts in with `"workflow": "<ClassName>"`:
+
+```json
+"skills": [{
+  "id": "deep_dive", "name": "Deep-dive review",
+  "description": "Parallel critique, synthesis, and your sign-off.",
+  "billing": "usage",
+  "workflow": "DeepDive"
+}]
+```
+
+`workflow.py` sits beside SKILL.md and exports `WORKFLOWS`. The contract:
+
+- **Deterministic orchestration only.** Imports limited to `asyncio`,
+  `datetime`, `typing`, `dataclasses`, `enum`, `json`, `math`, `re`, `uuid`,
+  `temporalio`. All real work goes through the platform activities, called
+  BY NAME: `run_turn` (one full agentic turn — SKILL.md persona + the
+  bundle's MCP servers; spec `{"prompt", "skill_id"?, "context"?}`, returns
+  the RunResult dict) and `run_step` (one single-shot model call;
+  `{"id", "model", "system", "user", "max_tokens"?}` → `{"text", …tokens}`).
+- The `@workflow.run` method takes ONE dict: `{"prompt", "agent_id",
+  "skill_id"}`. Return a dict — include `"text"` (the deliverable) and
+  `"ok"`.
+- Human gates are signals + a durable timer:
+  `await workflow.wait_condition(lambda: self._x is not None,
+  timeout=timedelta(...))`. Expose a `status` (or `stage`) `@workflow.query`
+  so the dev loop can show where a run is — and **name waiting states
+  `awaiting-…`** (or include a `questions` list): the dev loop watches that
+  query and hands control back the moment the flow pauses, instead of
+  waiting out its full poll budget.
+
+```python
+from datetime import timedelta
+import asyncio
+from temporalio import workflow
+from temporalio.common import RetryPolicy
+
+STEP = dict(start_to_close_timeout=timedelta(seconds=600),
+            retry_policy=RetryPolicy(maximum_attempts=3))
+TURN = dict(start_to_close_timeout=timedelta(seconds=3700),
+            heartbeat_timeout=timedelta(seconds=180),
+            retry_policy=RetryPolicy(maximum_attempts=2))
+
+@workflow.defn
+class DeepDive:
+    def __init__(self): self._approved = None
+    @workflow.run
+    async def run(self, p):
+        a, b = await asyncio.gather(  # parallel — steps can't do this
+            workflow.execute_activity("run_step", {"id": "bull", "model": "claude-haiku-4-5", "system": "optimist", "user": p["prompt"]}, **STEP),
+            workflow.execute_activity("run_step", {"id": "bear", "model": "claude-haiku-4-5", "system": "skeptic", "user": p["prompt"]}, **STEP))
+        draft = await workflow.execute_activity(
+            "run_turn", {"prompt": f"Synthesize:\n{a['text']}\n{b['text']}"}, **TURN)
+        try:  # the expert's sign-off gate — durable, survives restarts
+            await workflow.wait_condition(lambda: self._approved is not None,
+                                          timeout=timedelta(hours=24))
+        except asyncio.TimeoutError:
+            return {"ok": False, "error": "approval expired", **draft}
+        return {**draft, "ok": True, "approved": self._approved}
+    @workflow.signal
+    def approve(self, ok: bool): self._approved = bool(ok)
+    @workflow.query
+    def status(self): return {"state": "awaiting-approval" if self._approved is None else "done"}
+
+WORKFLOWS = [DeepDive]
+```
+
+**Dev loop:** `dev_use` validates workflow.py (import allowlist + the
+declared class names) · `dev_call` runs it on a LOCAL Temporal runtime that
+auto-provisions itself (first call downloads a small dev-server binary —
+the expert installs nothing) and returns a live **Web-UI link** where the
+expert can watch branches, gates and retries · a paused run returns a
+`flow-…` task id — intake/clarify answers go through `dev_answer`, any
+other signal (approval gates) through **`dev_signal(task_id, signal,
+payload)`** · `dev_result` polls.
+
+**Hard limits:** `workflow` is mutually exclusive with `steps` and with
+`success_fee` billing. And **publish refuses workflow bundles** for now —
+hosted execution hasn't shipped, so a published copy would behave
+differently than rehearsed. Build and iterate locally; keep the tool out of
+a publish (or drop its `workflow` field) until the platform announces
+hosted workflow support.
+
 ## Outcome pricing (success fee) — sell a completed service
 
 Instead of a flat per-call sticker, a tool can bill **only when the deliverable

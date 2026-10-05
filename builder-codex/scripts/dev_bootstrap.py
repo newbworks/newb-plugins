@@ -37,8 +37,13 @@ from pathlib import Path
 #
 # The value is shell-split, so multi-word specs like `-e <path>` work; an
 # editable install means repo edits reach the dev server with no reinstall.
+# The [temporal] extra rides along so workflow-capable bundles work out of
+# the box — the dev server's local Temporal runtime needs the SDK, and the
+# SDK itself downloads the dev-server binary on first use (the expert
+# installs nothing either way).
 DEFAULT_SPEC = os.environ.get(
-    "NEWB_DEV_INSTALL_SPEC", "git+https://github.com/newbworks/newb.git")
+    "NEWB_DEV_INSTALL_SPEC",
+    "newb[temporal] @ git+https://github.com/newbworks/newb.git")
 VENV_DIR = Path(os.environ.get(
     "NEWB_DEV_VENV", str(Path.home() / ".newb" / "dev-venv")))
 ENTRY = "newb-dev-server"
