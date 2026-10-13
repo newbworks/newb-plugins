@@ -23,23 +23,6 @@
       ]
     },
     {
-      "name": "idea-reviewer",
-      "source": "./idea-reviewer-claude",
-      "description": "See if your startup idea will win or lose against a specific thesis about the future.",
-      "version": "0.1.1",
-      "homepage": "https://marketplace.newb.works/marketplace/agents/idea-reviewer",
-      "repository": "https://github.com/newbworks/newb-plugins",
-      "license": "MIT",
-      "category": "Startup",
-      "tags": [
-        "startup",
-        "market prediction",
-        "idea validation",
-        "agentic commerce",
-        "consumer hardware"
-      ]
-    },
-    {
       "name": "missdarcei-demo",
       "source": "./missdarcei-demo-claude",
       "description": "Turn a selfie and beauty inspiration into chat-previewed makeup simulations, annotated placement maps, and a sourced personalized plan.",
