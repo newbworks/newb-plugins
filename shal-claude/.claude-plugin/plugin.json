@@ -4,10 +4,10 @@
   "version": "0.9.2",
   "description": "Evidence-based website reviews delivered as a polished PDF deck \u2014 measured accessibility and performance, annotated redlines, concepts, and an honest recommendation that can be \"no redesign needed\". Start with a free single-page review, then build and deploy through GitHub and Vercel.",
   "author": {
-    "name": "newb.works",
-    "url": "https://newb.works"
+    "name": "flair",
+    "url": "https://useflair.io"
   },
-  "homepage": "https://marketplace.newb.works/marketplace/agents/shal",
+  "homepage": "https://marketplace.useflair.io/marketplace/agents/shal",
   "repository": "https://github.com/newbworks/newb-plugins",
   "license": "MIT",
   "keywords": [

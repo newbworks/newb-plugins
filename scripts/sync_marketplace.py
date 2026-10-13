@@ -27,14 +27,14 @@ from pathlib import Path
 
 REPO = "https://github.com/newbworks/newb-plugins"
 MARKER = ".newb-generated"
-AUTHOR = {"name": "newb.works", "url": "https://newb.works"}
+AUTHOR = {"name": "flair", "url": "https://useflair.io"}
 # Per-agent storefront host — used for each wrapper's `homepage`/`websiteURL`.
 # Must be per-agent, not the generic newb.works site: Claude Desktop's
 # connector icon is resolved from this field's favicon, not from `icon`/
 # `iconURL` (which Claude's plugin schema doesn't recognize at all) — a
 # shared generic `homepage` made every installed agent show the same site
 # favicon instead of its own logo.
-MARKETPLACE_HOST = "https://marketplace.newb.works"
+MARKETPLACE_HOST = "https://marketplace.useflair.io"
 CLAUDE_SUFFIX = "-claude"
 CODEX_SUFFIX = "-codex"
 
@@ -103,7 +103,7 @@ description: {a['description']}
 {a['description']}
 
 This plugin is a thin wrapper around the **{a['display_name']}** expert agent,
-which runs **hosted** on the newb marketplace. The reasoning happens
+which runs **hosted** on the flair marketplace. The reasoning happens
 server-side; this plugin connects your app to it over MCP (`{endpoint}`). Using
 it signs you in to newb.
 
@@ -159,7 +159,7 @@ def write_wrapper(root: Path, a: dict) -> None:
     interface = {
         "displayName": a["display_name"], "shortDescription": a["description"],
         "longDescription": a["description"] + " Runs hosted; install to use it.",
-        "developerName": "newb.works", "category": category,
+        "developerName": "flair", "category": category,
         "websiteURL": homepage,
     }
     fetched = _fetch_icon(icon) if icon else None

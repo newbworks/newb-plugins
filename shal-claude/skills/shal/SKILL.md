@@ -8,7 +8,7 @@ description: Evidence-based website reviews delivered as a polished PDF deck —
 Evidence-based website reviews delivered as a polished PDF deck — measured accessibility and performance, annotated redlines, concepts, and an honest recommendation that can be "no redesign needed". Start with a free single-page review, then build and deploy through GitHub and Vercel.
 
 This plugin is a thin wrapper around the **shal** expert agent,
-which runs **hosted** on the newb marketplace. The reasoning happens
+which runs **hosted** on the flair marketplace. The reasoning happens
 server-side; this plugin connects your app to it over MCP (`https://agents.newb.works/mcp/shal/`). Using
 it signs you in to newb.
 

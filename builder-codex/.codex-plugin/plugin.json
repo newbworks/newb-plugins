@@ -1,12 +1,12 @@
 {
   "name": "newb-builder",
-  "version": "0.3.10",
-  "description": "Build and publish your own expert agent to the newb marketplace.",
+  "version": "0.3.11",
+  "description": "Build and publish your own expert agent to the flair marketplace.",
   "author": {
-    "name": "newb.works",
-    "url": "https://newb.works"
+    "name": "flair",
+    "url": "https://useflair.io"
   },
-  "homepage": "https://newb.works",
+  "homepage": "https://useflair.io",
   "repository": "https://github.com/newbworks/newb-plugins",
   "license": "MIT",
   "keywords": [
@@ -19,12 +19,12 @@
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",
   "interface": {
-    "displayName": "newb builder",
-    "shortDescription": "Build & publish an expert agent to the newb marketplace.",
+    "displayName": "flair builder",
+    "shortDescription": "Build & publish an expert agent to the flair marketplace.",
     "longDescription": "Turn your domain expertise into a hosted agent that others can install. The builder interviews you, scaffolds a bundle, helps you write the agent's instructions, validates it, and publishes it live \u2014 where it runs server-side and anyone can pull it into Claude or Codex with free credits.",
-    "developerName": "newb.works",
+    "developerName": "flair",
     "category": "Developer Tools",
-    "websiteURL": "https://newb.works",
+    "websiteURL": "https://useflair.io",
     "composerIcon": "./assets/composer-icon.png",
     "logo": "./assets/logo.png"
   }

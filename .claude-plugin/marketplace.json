@@ -1,17 +1,17 @@
 {
   "name": "newb",
-  "description": "newb.works plugin marketplace \u2014 talk to your newbs from Claude Code.",
+  "description": "flair plugin marketplace \u2014 expert agents for Claude Code.",
   "owner": {
-    "name": "newb.works",
+    "name": "flair",
     "email": "hello@newb.works"
   },
   "plugins": [
     {
       "name": "newb-builder",
       "source": "./builder-claude",
-      "description": "Build and publish your own expert agent to the newb marketplace.",
-      "version": "0.3.10",
-      "homepage": "https://newb.works",
+      "description": "Build and publish your own expert agent to the flair marketplace.",
+      "version": "0.3.11",
+      "homepage": "https://useflair.io",
       "repository": "https://github.com/newbworks/newb-plugins",
       "license": "MIT",
       "category": "developer-tools",
@@ -27,7 +27,7 @@
       "source": "./missdarcei-demo-claude",
       "description": "Turn a selfie and beauty inspiration into chat-previewed makeup simulations, annotated placement maps, and a sourced personalized plan.",
       "version": "0.2.4",
-      "homepage": "https://marketplace.newb.works/marketplace/agents/missdarcei-demo",
+      "homepage": "https://marketplace.useflair.io/marketplace/agents/missdarcei-demo",
       "repository": "https://github.com/newbworks/newb-plugins",
       "license": "MIT",
       "category": "Beauty & Personal Care",
@@ -45,7 +45,7 @@
       "source": "./shal-claude",
       "description": "Evidence-based website reviews delivered as a polished PDF deck \u2014 measured accessibility and performance, annotated redlines, concepts, and an honest recommendation that can be \"no redesign needed\". Start with a free single-page review, then build and deploy through GitHub and Vercel.",
       "version": "0.9.2",
-      "homepage": "https://marketplace.newb.works/marketplace/agents/shal",
+      "homepage": "https://marketplace.useflair.io/marketplace/agents/shal",
       "repository": "https://github.com/newbworks/newb-plugins",
       "license": "MIT",
       "category": "Development",

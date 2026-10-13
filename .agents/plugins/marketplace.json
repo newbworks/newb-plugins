@@ -1,7 +1,7 @@
 {
   "name": "newb",
   "interface": {
-    "displayName": "newb.works"
+    "displayName": "flair"
   },
   "plugins": [
     {
@@ -15,7 +15,7 @@
         "authentication": "ON_INSTALL"
       },
       "category": "Developer Tools",
-      "description": "Build and publish your own expert agent to the newb marketplace."
+      "description": "Build and publish your own expert agent to the flair marketplace."
     },
     {
       "name": "missdarcei-demo",

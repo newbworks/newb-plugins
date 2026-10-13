@@ -1,13 +1,13 @@
 {
   "name": "newb-builder",
-  "displayName": "newb builder",
-  "version": "0.3.10",
-  "description": "Build and publish your own expert agent to the newb marketplace.",
+  "displayName": "flair builder",
+  "version": "0.3.11",
+  "description": "Build and publish your own expert agent to the flair marketplace.",
   "author": {
-    "name": "newb.works",
-    "url": "https://newb.works"
+    "name": "flair",
+    "url": "https://useflair.io"
   },
-  "homepage": "https://newb.works",
+  "homepage": "https://useflair.io",
   "repository": "https://github.com/newbworks/newb-plugins",
   "license": "MIT",
   "keywords": [

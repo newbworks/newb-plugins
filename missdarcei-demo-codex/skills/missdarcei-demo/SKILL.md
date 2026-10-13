@@ -8,7 +8,7 @@ description: Turn a selfie and beauty inspiration into chat-previewed makeup sim
 Turn a selfie and beauty inspiration into chat-previewed makeup simulations, annotated placement maps, and a sourced personalized plan.
 
 This plugin is a thin wrapper around the **missdarcei-demo** expert agent,
-which runs **hosted** on the newb marketplace. The reasoning happens
+which runs **hosted** on the flair marketplace. The reasoning happens
 server-side; this plugin connects your app to it over MCP (`https://agents.newb.works/mcp/missdarcei-demo/`). Using
 it signs you in to newb.
 

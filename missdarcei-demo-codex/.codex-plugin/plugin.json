@@ -3,10 +3,10 @@
   "version": "0.2.4",
   "description": "Turn a selfie and beauty inspiration into chat-previewed makeup simulations, annotated placement maps, and a sourced personalized plan.",
   "author": {
-    "name": "newb.works",
-    "url": "https://newb.works"
+    "name": "flair",
+    "url": "https://useflair.io"
   },
-  "homepage": "https://marketplace.newb.works/marketplace/agents/missdarcei-demo",
+  "homepage": "https://marketplace.useflair.io/marketplace/agents/missdarcei-demo",
   "repository": "https://github.com/newbworks/newb-plugins",
   "license": "MIT",
   "keywords": [
@@ -23,9 +23,9 @@
     "displayName": "missdarcei-demo",
     "shortDescription": "Turn a selfie and beauty inspiration into chat-previewed makeup simulations, annotated placement maps, and a sourced personalized plan.",
     "longDescription": "Turn a selfie and beauty inspiration into chat-previewed makeup simulations, annotated placement maps, and a sourced personalized plan. Runs hosted; install to use it.",
-    "developerName": "newb.works",
+    "developerName": "flair",
     "category": "Beauty & Personal Care",
-    "websiteURL": "https://marketplace.newb.works/marketplace/agents/missdarcei-demo",
+    "websiteURL": "https://marketplace.useflair.io/marketplace/agents/missdarcei-demo",
     "logo": "./assets/logo.jpg",
     "composerIcon": "./assets/logo.jpg"
   }
