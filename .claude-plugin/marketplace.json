@@ -57,6 +57,22 @@
         "vercel",
         "github"
       ]
+    },
+    {
+      "name": "shalin-varghese",
+      "source": "./shalin-varghese-claude",
+      "description": "Reviews a founder's startup idea against the Flair investment thesis \u2014 genuinely sharp praise when it fits, concrete direction when it doesn't.",
+      "version": "0.1.1",
+      "homepage": "https://marketplace.useflair.io/marketplace/agents/shalin-varghese",
+      "repository": "https://github.com/newbworks/newb-plugins",
+      "license": "MIT",
+      "category": "Startups",
+      "tags": [
+        "startups",
+        "idea review",
+        "venture",
+        "feedback"
+      ]
     }
   ]
 }

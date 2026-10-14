@@ -1,0 +1,20 @@
+{
+  "name": "shalin-varghese",
+  "displayName": "Shalin Varghese",
+  "version": "0.1.1",
+  "description": "Reviews a founder's startup idea against the Flair investment thesis \u2014 genuinely sharp praise when it fits, concrete direction when it doesn't.",
+  "author": {
+    "name": "flair",
+    "url": "https://useflair.io"
+  },
+  "homepage": "https://marketplace.useflair.io/marketplace/agents/shalin-varghese",
+  "repository": "https://github.com/newbworks/newb-plugins",
+  "license": "MIT",
+  "keywords": [
+    "startups",
+    "idea review",
+    "venture",
+    "feedback"
+  ],
+  "icon": "https://agents.newb.works/agents/shalin-varghese/logo.svg"
+}

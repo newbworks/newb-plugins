@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "shalin-varghese": {
+      "type": "http",
+      "url": "https://agents.newb.works/mcp/shalin-varghese/"
+    }
+  }
+}
