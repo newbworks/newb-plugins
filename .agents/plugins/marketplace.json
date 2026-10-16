@@ -42,19 +42,6 @@
       },
       "category": "Development",
       "description": "Evidence-based website reviews delivered as a polished PDF deck \u2014 measured accessibility and performance, annotated redlines, concepts, and an honest recommendation that can be \"no redesign needed\". Start with a free single-page review, then build and deploy through GitHub and Vercel."
-    },
-    {
-      "name": "shalin-varghese",
-      "source": {
-        "source": "local",
-        "path": "./shalin-varghese-codex"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Startups",
-      "description": "Reviews a founder's startup idea against the Flair investment thesis \u2014 genuinely sharp praise when it fits, concrete direction when it doesn't."
     }
   ]
 }
