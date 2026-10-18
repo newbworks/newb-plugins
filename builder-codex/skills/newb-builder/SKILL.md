@@ -259,10 +259,11 @@ so a change to SKILL.md or the service can be checked instead of hoped:
 
 On this surface: cases are files under `evals/cases/` in the bundle.
 `dev_eval_promote(task_id)` turns a `dev_call` run into one; `dev_eval_run`
-runs a batch on the expert's own Claude Code (it waits a little, then hands
-you the batch id — poll `dev_eval_results`). The judge needs a model key
-(`ANTHROPIC_API_KEY` or the gateway key in the environment); without one the
-batch reports every case as **unjudged** and checks assertions only — say so.
+runs a batch (it waits a little, then hands you the batch id — poll
+`dev_eval_results`). Runs AND the rubric judge use the expert's own Claude
+Code login, like every single model call here (`steps` stages, success-fee
+grading): no key needed. A model pinned to a non-Anthropic gateway slug runs
+on the CLI's default locally, and the report says so.
 
 ## Returning an image or file
 
