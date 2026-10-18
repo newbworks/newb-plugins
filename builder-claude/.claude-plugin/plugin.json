@@ -1,7 +1,7 @@
 {
   "name": "newb-builder",
   "displayName": "flair builder",
-  "version": "0.3.11",
+  "version": "0.4.0",
   "description": "Build and publish your own expert agent to the flair marketplace.",
   "author": {
     "name": "flair",

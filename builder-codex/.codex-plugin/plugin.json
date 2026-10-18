@@ -1,6 +1,6 @@
 {
   "name": "newb-builder",
-  "version": "0.3.11",
+  "version": "0.4.0",
   "description": "Build and publish your own expert agent to the flair marketplace.",
   "author": {
     "name": "flair",
@@ -21,7 +21,7 @@
   "interface": {
     "displayName": "flair builder",
     "shortDescription": "Build & publish an expert agent to the flair marketplace.",
-    "longDescription": "Turn your domain expertise into a hosted agent that others can install. The builder interviews you, scaffolds a bundle, helps you write the agent's instructions, validates it, and publishes it live \u2014 where it runs server-side and anyone can pull it into Claude or Codex with free credits.",
+    "longDescription": "Turn your domain expertise into a hosted agent that others can install. The builder interviews you, scaffolds a bundle, helps you write the agent's instructions, tests it with evals, validates it, and publishes it live — where it runs server-side and anyone can pull it into Claude or Codex with free credits.",
     "developerName": "flair",
     "category": "Developer Tools",
     "websiteURL": "https://useflair.io",
