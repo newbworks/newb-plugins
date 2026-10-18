@@ -200,10 +200,15 @@ missing files); fix them all before a test run. Default to a single turn —
 reach for a graph only when the service is better for it, and say why in
 one line.
 
-A graph validates here (`validate_agent.py` / `dev_use` report every graph
-problem); it runs on the hosted runtime. Test a graph service after staging,
-or on the web builder's test panel — `dev_call` runs classic and `steps`
-services.
+Graphs run here too, through the same `dev_call` / `dev_answer` /
+`dev_result`: `turn` and `agent` nodes are Claude Code turns on the expert's
+login (an agent node sees only the servers it names, plus the CLI's own
+shell, file and fetch tools), `step` and `grade` nodes are single calls,
+shell/file/MCP `tool` nodes run in a scratch directory under the dev root,
+and a `gate` pauses for `dev_answer` — at an expert gate the expert answers
+it themselves. Progress reads node by node and the cost report breaks down
+per node; `node_reached` / `node_order` eval assertions work on these runs.
+A run interrupted mid-graph resumes from its last completed node.
 
 ## Run it locally — before publishing
 

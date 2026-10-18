@@ -40,13 +40,19 @@ from pathlib import Path
 # The [temporal] extra rides along so workflow-capable bundles work out of
 # the box — the dev server's local Temporal runtime needs the SDK, and the
 # SDK itself downloads the dev-server binary on first use (the expert
-# installs nothing either way).
+# installs nothing either way). The [graph] extra is the graph runtime
+# (LangGraph + the SQLite checkpoint), so graph services run locally too.
 DEFAULT_SPEC = os.environ.get(
     "NEWB_DEV_INSTALL_SPEC",
-    "newb[temporal] @ git+https://github.com/newbworks/newb.git")
+    "newb[temporal,graph] @ git+https://github.com/newbworks/newb.git")
 VENV_DIR = Path(os.environ.get(
     "NEWB_DEV_VENV", str(Path.home() / ".newb" / "dev-venv")))
 ENTRY = "newb-dev-server"
+# What the venv was last installed from. A changed spec (a new extra, a
+# pinned fork) reinstalls on the next launch instead of silently serving an
+# older install forever — the way the graph extra would otherwise never
+# reach an expert who installed the plugin before it existed.
+SPEC_STAMP = VENV_DIR / ".newb-install-spec"
 
 
 def die(problem: str, fix: str) -> "NoReturn":  # noqa: F821
@@ -76,12 +82,18 @@ def venv_bin(name: str) -> Path:
 def ensure_venv() -> Path:
     """Create ~/.newb/dev-venv and install newb into it. Returns the entry point."""
     entry = venv_bin(ENTRY)
-    if entry.is_file():
+    try:
+        stamped = SPEC_STAMP.read_text(encoding="utf-8").strip()
+    except OSError:
+        stamped = ""
+    if entry.is_file() and stamped == DEFAULT_SPEC:
         return entry
 
     sys.stderr.write(
-        "newb-dev: first launch — installing the local dev server into "
-        f"{VENV_DIR}. This takes a minute; later launches are instant.\n")
+        ("newb-dev: the dev server's install spec changed — updating it in "
+         if entry.is_file() else
+         "newb-dev: first launch — installing the local dev server into ")
+        + f"{VENV_DIR}. This takes a minute; later launches are instant.\n")
     if not (VENV_DIR / "pyvenv.cfg").is_file():
         try:
             import venv  # noqa: PLC0415 - only needed on the slow path
@@ -121,6 +133,10 @@ def ensure_venv() -> Path:
         die(f"newb installed but {ENTRY} is not in {VENV_DIR}.",
             "the installed version may predate the dev server — reinstall from "
             "a newer newb, or set NEWB_DEV_SERVER_CMD to run it directly.")
+    try:
+        SPEC_STAMP.write_text(DEFAULT_SPEC + "\n", encoding="utf-8")
+    except OSError:
+        pass  # best-effort: a missing stamp only means one extra install next time
     return entry
 
 
