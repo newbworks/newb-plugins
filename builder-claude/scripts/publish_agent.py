@@ -313,9 +313,10 @@ def main() -> None:
         print(f"\n✓ staged '{slug}' (hidden — not live yet)  [sha256 {sha[:12]}]")
         if result.get("archived"):
             print(f"  ✓ source archived server-side ({result.get('archive_path', '')})")
-        cfg = result.get("configure_url", "")
-        print("  Finish on the configure page to publish — set the LLM + pricing:")
-        print(f"\n    {cfg}\n")
+        url = (result.get("builder_url")
+               or f"{args.lobby.rstrip('/')}/marketplace/experts/agents/{slug}/builder?step=publish")
+        print("  Finish in the builder to go live — its last step (Listing & go live):")
+        print(f"\n    {url}\n")
         return
 
     if not args.bundle_dir:
@@ -355,22 +356,22 @@ def main() -> None:
         host = args.host.rstrip("/")
         result = _post(f"{host}/agents", tar, "application/gzip", token=args.token)
         slug = result.get("agent_id", slug)
-        configure_url = f"{lobby}/marketplace/experts/agents/{slug}/configure"
+        builder_url = f"{lobby}/marketplace/experts/agents/{slug}/builder?step=publish"
     else:
         # Default: sign in, then upload through the lobby (it stages for you).
         token = _oauth_login(lobby)
         result = _post(f"{lobby}/api/marketplace/agents/upload", tar,
                        "application/gzip", token=token)
         slug = result.get("slug", slug)
-        configure_url = (result.get("configure_url")
-                         or f"{lobby}/marketplace/experts/agents/{slug}/configure")
+        builder_url = (result.get("builder_url")
+                       or f"{lobby}/marketplace/experts/agents/{slug}/builder?step=publish")
 
     print(f"\n✓ staged '{slug}' (hidden — not live yet)")
     if result.get("archived"):
         where = result.get("archive_path", "the marketplace archive")
         print(f"  ✓ source archived server-side ({where})")
-    print("  Finish on the configure page to publish — set the LLM + pricing, then submit:")
-    print(f"\n    {configure_url}\n")
+    print("  Finish in the builder to go live — its last step (Listing & go live):")
+    print(f"\n    {builder_url}\n")
 
 
 if __name__ == "__main__":

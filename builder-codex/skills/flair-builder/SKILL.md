@@ -160,8 +160,8 @@ for a secret in chat**; where they go is below, under your tools.
 **Secrets on this surface:** a server the expert has already connected in
 Claude Code satisfies the declaration for local runs, and `dev_use` says
 which it found. Anything else goes in a `.env` beside the bundle (never
-committed, never published). Production credentials are entered on the
-configure page after publishing, never in the bundle.
+committed, never published). Production credentials are entered in the
+builder's Tools step after publishing, never in the bundle.
 
 ## Complex services: a graph instead of one turn
 
@@ -296,19 +296,21 @@ already signed the expert in:
    discard uncommitted work, which is refused until you commit or `force`.
 
 Then edit, `dev_call`, run the evals, `dev_check`, publish. Same slug, so it
-stages as the next version. `edit_agent` on the connector covers only config
-(model, credentials, price multiple, logo) — everything else is a source
-edit + re-publish.
+stages as the next version. `edit_agent` on the connector returns the
+builder link for an agent whose config (model, credentials, listing, logo)
+needs a change — everything in the bundle is a source edit + re-publish.
 
-## Publish = sign in, stage, then configure to go live
+## Publish = sign in, stage, then finish in the builder to go live
 
 `python3 scripts/publish_agent.py ./agents/<slug>` opens the browser to sign
 in, uploads the bundle through the lobby, which stages it, and prints a
-**configure link**. Give that link to the expert: on the configure page they
-set the model, any MCP credentials the tools need, and pricing — **submitting
-that page is what publishes it**. Until then the agent is staged: hidden, not
-runnable. Never report a publish as "done" before the expert has finished
-that page. (`--configure-platform` is for quick testing only.)
+**builder link** (the builder's last step, *Listing & go live*). Give that
+link to the expert: there they check the listing, logo and images, set the
+human-expert fee and response window, add any credentials the tools need,
+and press **Go live** — **that is what publishes it**. Until then the agent
+is staged: hidden, not runnable. Never report a publish as "done" before the
+expert has pressed Go live. Never send them to a "configure page": it no
+longer exists as its own surface (old links land in the builder).
 
 With no shell on the bundle's host (Cowork and similar sandboxes), call
 **`dev_prepare_publish`** instead: it tars the loaded bundle in-process and
