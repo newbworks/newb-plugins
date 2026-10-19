@@ -5,7 +5,7 @@
   },
   "plugins": [
     {
-      "name": "newb-builder",
+      "name": "flair-builder",
       "source": {
         "source": "local",
         "path": "./builder-codex"

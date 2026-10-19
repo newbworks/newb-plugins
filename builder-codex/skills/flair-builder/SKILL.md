@@ -1,5 +1,5 @@
 ---
-name: newb-builder
+name: flair-builder
 description: Build and publish your own expert agent to the flair marketplace. Use when a domain expert wants to turn their process into a hosted agent that others can install and use.
 ---
 <!-- GENERATED from builder/skill/ (core.md + local.md). Edit those, then: python -m newb.marketplace.builder_skill -->

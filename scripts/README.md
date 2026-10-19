@@ -11,7 +11,7 @@ For every **published** expert agent in the executor's `/catalog.json`, it
 (`.claude-plugin/marketplace.json`, `.agents/plugins/marketplace.json`).
 
 **It never touches hand-maintained plugins.** The sync only manages wrappers it
-generated, which carry a `.newb-generated` marker. `newb`, `newb-builder`, and a
+generated, which carry a `.newb-generated` marker. `flair-builder` and a
 curated `recruiting-copilot` have no marker and are left alone. Generated
 wrappers whose agent leaves the catalog are pruned. Output is deterministic and
 written only on change, so an unchanged catalog produces no commit.

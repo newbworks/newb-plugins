@@ -8,7 +8,7 @@ indexes. Stdlib only — no `newb` dependency — so it runs in plain CI.
 
 Safety:
 - Only touches wrappers it generated (marked with a `.newb-generated` file).
-  Hand-maintained plugins (`newb`, `newb-builder`, a curated
+  Hand-maintained plugins (`flair-builder`, a curated
   `recruiting-copilot`, …) have no marker and are left completely alone.
 - Prunes generated wrappers whose agent has left the catalog.
 - Writes only on real content change, and output is deterministic — an
@@ -79,8 +79,8 @@ _ICON_EXT_BY_CONTENT_TYPE = {
 def _fetch_icon(url: str) -> tuple[bytes, str] | None:
     """Download an agent's icon so Codex can bundle it as a local asset —
     its plugin schema has no field for a *remote* icon URL, only a
-    relative-path `logo`/`composerIcon` (see the hand-maintained `newb`
-    and `newb-builder` plugins)."""
+    relative-path `logo`/`composerIcon` (see the hand-maintained
+    `flair-builder` plugin)."""
     try:
         with urllib.request.urlopen(url, timeout=30) as r:  # noqa: S310
             ct = r.headers.get_content_type()

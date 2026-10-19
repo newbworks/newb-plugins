@@ -191,7 +191,7 @@ def _oauth_login(lobby: str) -> str:
     # 1) Dynamic client registration (public client, loopback redirect).
     reg = _post(
         f"{lobby}/api/oauth/register",
-        json.dumps({"redirect_uris": [redirect_uri], "client_name": "newb-builder"}).encode(),
+        json.dumps({"redirect_uris": [redirect_uri], "client_name": "flair-builder"}).encode(),
         "application/json",
     )
     client_id = reg["client_id"]

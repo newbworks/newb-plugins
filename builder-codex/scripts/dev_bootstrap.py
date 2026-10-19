@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Launch the `newb-dev` MCP server, installing it first if need be.
 
-Claude Code runs this over stdio when the newb-builder plugin loads, so it must
+Claude Code runs this over stdio when the flair-builder plugin loads, so it must
 be stdlib-only (the machine may have nothing else) and it must hand the stdio
 channel to the real server via exec — anything printed on stdout would be read
 as MCP protocol traffic.
@@ -59,7 +59,7 @@ def die(problem: str, fix: str) -> "NoReturn":  # noqa: F821
     sys.stderr.write(
         f"\nnewb-dev could not start.\n\n  {problem}\n\n  Fix: {fix}\n\n"
         "  (This is the local dev server for building your own expert agent. "
-        "The rest of the newb-builder plugin still works without it.)\n\n")
+        "The rest of the flair-builder plugin still works without it.)\n\n")
     sys.exit(1)
 
 

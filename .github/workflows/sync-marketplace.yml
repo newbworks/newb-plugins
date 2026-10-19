@@ -3,7 +3,7 @@ name: Sync marketplace listings
 # Regenerate the installable per-agent plugins from the newb catalog. Runs
 # hourly, on demand, and on a repository_dispatch the lobby can fire when an
 # agent is published (for near-instant listing). Hand-maintained plugins
-# (newb, newb-builder, curated recruiting-copilot) are never touched — the sync
+# (flair-builder, curated recruiting-copilot) are never touched — the sync
 # only manages wrappers it generated (marked with .newb-generated).
 
 on:

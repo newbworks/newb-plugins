@@ -7,10 +7,10 @@
   },
   "plugins": [
     {
-      "name": "newb-builder",
+      "name": "flair-builder",
       "source": "./builder-claude",
       "description": "Build and publish your own expert agent to the flair marketplace.",
-      "version": "0.4.2",
+      "version": "0.5.0",
       "homepage": "https://useflair.io",
       "repository": "https://github.com/newbworks/newb-plugins",
       "license": "MIT",
