@@ -1,7 +1,7 @@
 {
   "name": "swetha-garimalla",
-  "displayName": "swethag",
-  "version": "0.2.2",
+  "displayName": "Swetha Garimalla \u2014 AI Biotech Viability",
+  "version": "0.2.3",
   "description": "Assesses the commercial viability of AI-native biotech companies from their SEC filings, pipeline, patents, talent signals, earnings and news \u2014 delivered as an FCF/ROIC workbook and a sourced viability memo.",
   "author": {
     "name": "flair",

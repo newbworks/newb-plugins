@@ -3,11 +3,11 @@ name: swetha-garimalla
 description: Assesses the commercial viability of AI-native biotech companies from their SEC filings, pipeline, patents, talent signals, earnings and news — delivered as an FCF/ROIC workbook and a sourced viability memo.
 ---
 
-# swethag
+# Swetha Garimalla — AI Biotech Viability
 
 Assesses the commercial viability of AI-native biotech companies from their SEC filings, pipeline, patents, talent signals, earnings and news — delivered as an FCF/ROIC workbook and a sourced viability memo.
 
-This plugin is a thin wrapper around the **swethag** expert agent,
+This plugin is a thin wrapper around the **Swetha Garimalla — AI Biotech Viability** expert agent,
 which runs **hosted** on the flair marketplace. The reasoning happens
 server-side; this plugin connects your app to it over MCP (`https://agents.newb.works/mcp/swetha-garimalla/`). Using
 it signs you in to newb.
