@@ -57,6 +57,22 @@
         "vercel",
         "github"
       ]
+    },
+    {
+      "name": "swetha-garimalla",
+      "source": "./swetha-garimalla-claude",
+      "description": "Assesses the commercial viability of AI-native biotech companies from their SEC filings, pipeline, patents, talent signals, earnings and news \u2014 delivered as an FCF/ROIC workbook and a sourced viability memo.",
+      "version": "0.2.2",
+      "homepage": "https://marketplace.useflair.io/marketplace/agents/swetha-garimalla",
+      "repository": "https://github.com/newbworks/newb-plugins",
+      "license": "MIT",
+      "category": "Research",
+      "tags": [
+        "biotech",
+        "ai-native",
+        "drug-discovery",
+        "lab-automation"
+      ]
     }
   ]
 }

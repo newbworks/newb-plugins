@@ -1,0 +1,30 @@
+{
+  "name": "swetha-garimalla",
+  "version": "0.2.2",
+  "description": "Assesses the commercial viability of AI-native biotech companies from their SEC filings, pipeline, patents, talent signals, earnings and news \u2014 delivered as an FCF/ROIC workbook and a sourced viability memo.",
+  "author": {
+    "name": "flair",
+    "url": "https://useflair.io"
+  },
+  "homepage": "https://marketplace.useflair.io/marketplace/agents/swetha-garimalla",
+  "repository": "https://github.com/newbworks/newb-plugins",
+  "license": "MIT",
+  "keywords": [
+    "biotech",
+    "ai-native",
+    "drug-discovery",
+    "lab-automation"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "swethag",
+    "shortDescription": "Assesses the commercial viability of AI-native biotech companies from their SEC filings, pipeline, patents, talent signals, earnings and news \u2014 delivered as an FCF/ROIC workbook and a sourced viability memo.",
+    "longDescription": "Assesses the commercial viability of AI-native biotech companies from their SEC filings, pipeline, patents, talent signals, earnings and news \u2014 delivered as an FCF/ROIC workbook and a sourced viability memo. Runs hosted; install to use it.",
+    "developerName": "flair",
+    "category": "Research",
+    "websiteURL": "https://marketplace.useflair.io/marketplace/agents/swetha-garimalla",
+    "logo": "./assets/logo.png",
+    "composerIcon": "./assets/logo.png"
+  }
+}

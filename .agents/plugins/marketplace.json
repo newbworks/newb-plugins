@@ -42,6 +42,19 @@
       },
       "category": "Development",
       "description": "Evidence-based website reviews delivered as a polished PDF deck \u2014 measured accessibility and performance, annotated redlines, concepts, and an honest recommendation that can be \"no redesign needed\". Start with a free single-page review, then build and deploy through GitHub and Vercel."
+    },
+    {
+      "name": "swetha-garimalla",
+      "source": {
+        "source": "local",
+        "path": "./swetha-garimalla-codex"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Research",
+      "description": "Assesses the commercial viability of AI-native biotech companies from their SEC filings, pipeline, patents, talent signals, earnings and news \u2014 delivered as an FCF/ROIC workbook and a sourced viability memo."
     }
   ]
 }
