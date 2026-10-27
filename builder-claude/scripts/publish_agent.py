@@ -32,8 +32,8 @@ import webbrowser
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
 
-DEFAULT_HOST = "https://agents.newb.works"
-DEFAULT_LOBBY = "https://marketplace.newb.works"
+DEFAULT_HOST = "https://agents.useflair.io"
+DEFAULT_LOBBY = "https://marketplace.useflair.io"
 
 
 # Never shipped in a publish tarball: dev-only debris (nothing here writes to
@@ -271,7 +271,7 @@ def main() -> None:
     ap = argparse.ArgumentParser(description="Publish a bundle to the newb marketplace.")
     ap.add_argument("bundle_dir", nargs="?", help="path to the agent bundle directory")
     ap.add_argument("--lobby", default=DEFAULT_LOBBY,
-                    help="newb lobby base URL (default: marketplace.newb.works)")
+                    help="newb lobby base URL (default: marketplace.useflair.io)")
     ap.add_argument("--token", default=os.environ.get("NEWB_MARKETPLACE_PUBLISH_TOKEN"),
                     help="(legacy/CI) publish token to push straight to the executor, "
                          "skipping sign-in")

@@ -55,7 +55,7 @@ def main() -> int:
     print(f"  price: {m.price_credits} credits/run  ·  free grant: {m.free_credits_grant}")
     print("\nDerived A2A Agent Card:")
     print(json.dumps(
-        bundle.agent_card(url="https://gateway.newb.works/a2a/" + m.name), indent=2
+        bundle.agent_card(url="https://gateway.useflair.io/a2a/" + m.name), indent=2
     ))
     return 0
 
