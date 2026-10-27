@@ -2,7 +2,7 @@
   "mcpServers": {
     "swetha-garimalla": {
       "type": "http",
-      "url": "https://agents.newb.works/mcp/swetha-garimalla/"
+      "url": "https://agents.useflair.io/mcp/swetha-garimalla/"
     }
   }
 }

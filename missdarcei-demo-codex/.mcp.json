@@ -2,7 +2,7 @@
   "mcpServers": {
     "missdarcei-demo": {
       "type": "http",
-      "url": "https://agents.newb.works/mcp/missdarcei-demo/"
+      "url": "https://agents.useflair.io/mcp/missdarcei-demo/"
     }
   }
 }

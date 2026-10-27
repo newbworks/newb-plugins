@@ -9,7 +9,7 @@ Evidence-based website reviews delivered as a polished PDF deck — measured acc
 
 This plugin is a thin wrapper around the **shal** expert agent,
 which runs **hosted** on the flair marketplace. The reasoning happens
-server-side; this plugin connects your app to it over MCP (`https://agents.newb.works/mcp/shal/`). Using
+server-side; this plugin connects your app to it over MCP (`https://agents.useflair.io/mcp/shal/`). Using
 it signs you in to newb.
 
 ## What it can do
