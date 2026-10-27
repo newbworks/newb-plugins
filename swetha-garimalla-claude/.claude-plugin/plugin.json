@@ -1,8 +1,8 @@
 {
   "name": "swetha-garimalla",
   "displayName": "Swetha Garimalla \u2014 AI Biotech Viability",
-  "version": "0.2.5",
-  "description": "Assesses the commercial viability of AI-native biotech companies from their SEC filings, pipeline, patents, talent signals, earnings and news \u2014 delivered as an FCF/ROIC workbook and a sourced viability memo.",
+  "version": "0.3.0",
+  "description": "Assesses AI-native biotech companies from their SEC filings, pipeline, patents, people, customers, insiders, earnings and news \u2014 a commercial-viability verdict with an FCF/ROIC workbook, and a read on whether the company is steered by investors, employees or clients.",
   "author": {
     "name": "flair",
     "url": "https://useflair.io"

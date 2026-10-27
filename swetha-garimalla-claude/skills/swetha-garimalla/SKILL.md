@@ -1,11 +1,11 @@
 ---
 name: swetha-garimalla
-description: Assesses the commercial viability of AI-native biotech companies from their SEC filings, pipeline, patents, talent signals, earnings and news — delivered as an FCF/ROIC workbook and a sourced viability memo.
+description: Assesses AI-native biotech companies from their SEC filings, pipeline, patents, people, customers, insiders, earnings and news — a commercial-viability verdict with an FCF/ROIC workbook, and a read on whether the company is steered by investors, employees or clients.
 ---
 
 # Swetha Garimalla — AI Biotech Viability
 
-Assesses the commercial viability of AI-native biotech companies from their SEC filings, pipeline, patents, talent signals, earnings and news — delivered as an FCF/ROIC workbook and a sourced viability memo.
+Assesses AI-native biotech companies from their SEC filings, pipeline, patents, people, customers, insiders, earnings and news — a commercial-viability verdict with an FCF/ROIC workbook, and a read on whether the company is steered by investors, employees or clients.
 
 This plugin is a thin wrapper around the **Swetha Garimalla — AI Biotech Viability** expert agent,
 which runs **hosted** on the flair marketplace. The reasoning happens
@@ -15,6 +15,7 @@ it signs you in to newb.
 ## What it can do
 
 - **Commercial viability assessment** (tool `viability_assessment`)
+- **Stakeholder sentiment & strategic direction** (tool `stakeholder_direction`)
 
 Call the tool that matches what you need; the hosted agent does the work and
 returns the result. Each tool's description states its price, typical

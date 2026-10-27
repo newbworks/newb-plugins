@@ -61,8 +61,8 @@
     {
       "name": "swetha-garimalla",
       "source": "./swetha-garimalla-claude",
-      "description": "Assesses the commercial viability of AI-native biotech companies from their SEC filings, pipeline, patents, talent signals, earnings and news \u2014 delivered as an FCF/ROIC workbook and a sourced viability memo.",
-      "version": "0.2.5",
+      "description": "Assesses AI-native biotech companies from their SEC filings, pipeline, patents, people, customers, insiders, earnings and news \u2014 a commercial-viability verdict with an FCF/ROIC workbook, and a read on whether the company is steered by investors, employees or clients.",
+      "version": "0.3.0",
       "homepage": "https://marketplace.useflair.io/marketplace/agents/swetha-garimalla",
       "repository": "https://github.com/newbworks/newb-plugins",
       "license": "MIT",
