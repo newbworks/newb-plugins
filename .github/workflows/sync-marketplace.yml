@@ -38,14 +38,14 @@ jobs:
           NEWB_CATALOG_URL: ${{ vars.NEWB_CATALOG_URL }}
         run: |
           python3 scripts/sync_marketplace.py \
-            --catalog-url "${NEWB_CATALOG_URL:-https://agents.newb.works/catalog.json}" \
+            --catalog-url "${NEWB_CATALOG_URL:-https://agents.useflair.io/catalog.json}" \
             --root .
 
       - name: Commit & push if changed
         run: |
           if [ -n "$(git status --porcelain)" ]; then
             git config user.name "newb-bot"
-            git config user.email "hello@newb.works"
+            git config user.email "hi@useflair.io"
             git add -A
             git commit -m "chore(sync): update marketplace listings from catalog"
             git push
