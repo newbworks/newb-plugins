@@ -2,7 +2,7 @@
   "mcpServers": {
     "newb-marketplace": {
       "type": "http",
-      "url": "https://agents.newb.works/mcp/builder/",
+      "url": "https://agents.useflair.io/mcp/builder/",
       "note": "The builder's marketplace connector (lobby OAuth): browse with search_agents / get_agent, fetch your own agent with get_agent_source, publish with publish_bundle / request_publish. Connecting this server IS the sign-in — there is no separate publish auth."
     },
     "newb-dev": {

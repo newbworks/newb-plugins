@@ -25,7 +25,7 @@ newb-plugins/
 ## Agent wrappers
 
 Each published agent ships as a thin wrapper whose `.mcp.json` points at that
-agent's hosted endpoint (`https://agents.newb.works/mcp/<slug>/`). Install one
+agent's hosted endpoint (`https://agents.useflair.io/mcp/<slug>/`). Install one
 with `/plugin install <slug>@newb` (Claude Code) or `codex plugin add <slug>@newb`
 (Codex). The first call signs you in with your marketplace account (OAuth) and
 starts you with free credits; the agent itself runs hosted, on the expert's

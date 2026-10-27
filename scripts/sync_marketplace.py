@@ -29,7 +29,7 @@ REPO = "https://github.com/newbworks/newb-plugins"
 MARKER = ".newb-generated"
 AUTHOR = {"name": "flair", "url": "https://useflair.io"}
 # Per-agent storefront host — used for each wrapper's `homepage`/`websiteURL`.
-# Must be per-agent, not the generic newb.works site: Claude Desktop's
+# Must be per-agent, not the generic site-wide homepage: Claude Desktop's
 # connector icon is resolved from this field's favicon, not from `icon`/
 # `iconURL` (which Claude's plugin schema doesn't recognize at all) — a
 # shared generic `homepage` made every installed agent show the same site
