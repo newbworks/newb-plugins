@@ -24,6 +24,7 @@ what to do about it.
 from __future__ import annotations
 
 import os
+import shlex
 import shutil
 import subprocess
 import sys
@@ -35,8 +36,9 @@ from pathlib import Path
 #
 #   NEWB_DEV_INSTALL_SPEC="-e /path/to/newb"
 #
-# The value is shell-split, so multi-word specs like `-e <path>` work; an
+# A spec that leads with an option is shell-split, so `-e <path>` works; an
 # editable install means repo edits reach the dev server with no reinstall.
+# Anything else is handed to pip as ONE requirement — see install_args.
 # The [temporal] extra rides along so workflow-capable bundles work out of
 # the box — the dev server's local Temporal runtime needs the SDK, and the
 # SDK itself downloads the dev-server binary on first use (the expert
@@ -53,6 +55,21 @@ ENTRY = "newb-dev-server"
 # older install forever — the way the graph extra would otherwise never
 # reach an expert who installed the plugin before it existed.
 SPEC_STAMP = VENV_DIR / ".newb-install-spec"
+
+
+def install_args(spec: str) -> list:
+    """The pip arguments for an install spec.
+
+    A spec is ONE requirement unless it leads with an option (``-e <path>``,
+    ``--pre newb``). A PEP 508 direct reference such as
+    ``newb[graph] @ git+https://…`` contains spaces that pip must see inside a
+    single argument: shell-splitting it hands pip a bare ``@``, pip rejects
+    that, and the server dies on every launch — which is what the default
+    spec did until this helper existed."""
+    spec = spec.strip()
+    if spec.startswith("-"):
+        return shlex.split(spec)
+    return [spec]
 
 
 def die(problem: str, fix: str) -> "NoReturn":  # noqa: F821
@@ -108,12 +125,11 @@ def ensure_venv() -> Path:
     python = venv_bin("python")
     if not python.is_file():  # some builds only ship python3
         python = venv_bin("python3")
-    import shlex
 
     try:
         proc = subprocess.run(
             [str(python), "-m", "pip", "install", "--quiet",
-             *shlex.split(DEFAULT_SPEC)],
+             *install_args(DEFAULT_SPEC)],
             capture_output=True, text=True, timeout=900,
         )
     except subprocess.TimeoutExpired:
@@ -143,8 +159,6 @@ def ensure_venv() -> Path:
 def main() -> None:
     override = os.environ.get("NEWB_DEV_SERVER_CMD", "").strip()
     if override:
-        import shlex
-
         parts = shlex.split(override)
         resolved = shutil.which(parts[0])
         if not resolved:
