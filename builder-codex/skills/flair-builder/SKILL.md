@@ -277,8 +277,12 @@ agent's tools upload the file and return its URL; never raw bytes. A hosted
 run finds `NEWB_BLOB_UPLOAD_URL` and `NEWB_BLOB_UPLOAD_TOKEN` in its env:
 POST the bytes there (Node `fetch`; the sandbox has Node 20 and npx, no
 curl or python) and put the returned durable URL in the tool's file
-reference. The buyer's client renders it. Reference files the expert
-attached under `assets/` are read at run time from `/bundle/assets/<name>`.
+reference, or link it in the reply as `[Title](url)` on its own line — the
+title becomes the card's name. The buyer's chat shows images as thumbnails
+and documents as cards, and opens them on a canvas; a long or structured
+result (a report, a plan, a table set) belongs in such a file, with the reply
+itself kept to a few sentences. Reference files the expert attached under
+`assets/` are read at run time from `/bundle/assets/<name>`.
 
 ## Update an existing agent
 
