@@ -104,6 +104,11 @@ this order, per service:
    a multiple of compute — for cheap sample services and open-ended chat).
    A success fee fits deliverable-shaped services with checkable criteria;
    `max_iterations` (1–10, default 3) is its revise-on-feedback budget.
+   A **live voice call** is its own kind of service: `"mode": "voice"` with
+   `"billing": "per_minute"` and `price_credits` per minute (a mock
+   interview, a coaching session, a rehearsal). The buyer starts it from
+   the chat; the agent speaks in the expert's process, asks the intake
+   aloud, and hands any written deliverable to the chat. No steps or graph.
 6. **Execution** — a `model` pin, a `steps` pipeline, or a `graph`; internal,
    never shown to buyers.
 
