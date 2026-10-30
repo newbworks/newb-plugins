@@ -1,0 +1,32 @@
+{
+  "name": "susan-okeefe",
+  "version": "0.1.2",
+  "description": "Blunt, specific MBA application feedback in the HBS Guru method: rate one essay on the Four Levels for free, then get a full-application sanity check, a ding report, or an interview prep brief \u2014 with Susan one escalation away for the call.",
+  "author": {
+    "name": "flair",
+    "url": "https://useflair.io"
+  },
+  "homepage": "https://marketplace.useflair.io/marketplace/agents/susan-okeefe",
+  "repository": "https://github.com/newbworks/newb-plugins",
+  "license": "MIT",
+  "keywords": [
+    "mba-admissions",
+    "hbs",
+    "stanford-gsb",
+    "wharton",
+    "essays",
+    "interview-prep"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Susan O'Keefe Demo",
+    "shortDescription": "Blunt, specific MBA application feedback in the HBS Guru method: rate one essay on the Four Levels for free, then get a full-application sanity check, a ding report, or an interview prep brief \u2014 with Susan one escalation away for the call.",
+    "longDescription": "Blunt, specific MBA application feedback in the HBS Guru method: rate one essay on the Four Levels for free, then get a full-application sanity check, a ding report, or an interview prep brief \u2014 with Susan one escalation away for the call. Runs hosted; install to use it.",
+    "developerName": "flair",
+    "category": "Education",
+    "websiteURL": "https://marketplace.useflair.io/marketplace/agents/susan-okeefe",
+    "logo": "./assets/logo.jpg",
+    "composerIcon": "./assets/logo.jpg"
+  }
+}

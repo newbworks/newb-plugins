@@ -1,0 +1,21 @@
+{
+  "name": "a1-labs",
+  "displayName": "a1 labs",
+  "version": "0.1.2",
+  "description": "Paste in a messy marketplace case and get the verdict, the internal playbook, and a ready-to-send reply \u2014 written the way an experienced trust & safety ops lead would handle it.",
+  "author": {
+    "name": "flair",
+    "url": "https://useflair.io"
+  },
+  "homepage": "https://marketplace.useflair.io/marketplace/agents/a1-labs",
+  "repository": "https://github.com/newbworks/newb-plugins",
+  "license": "MIT",
+  "keywords": [
+    "trust-and-safety",
+    "dispute-resolution",
+    "marketplace-ops",
+    "chargebacks",
+    "customer-support"
+  ],
+  "icon": "https://agents.useflair.io/agents/a1-labs/logo.svg"
+}

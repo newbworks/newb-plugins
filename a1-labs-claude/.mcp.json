@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "a1-labs": {
+      "type": "http",
+      "url": "https://agents.useflair.io/mcp/a1-labs/"
+    }
+  }
+}

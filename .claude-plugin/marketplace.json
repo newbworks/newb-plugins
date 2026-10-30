@@ -23,6 +23,23 @@
       ]
     },
     {
+      "name": "a1-labs",
+      "source": "./a1-labs-claude",
+      "description": "Paste in a messy marketplace case and get the verdict, the internal playbook, and a ready-to-send reply \u2014 written the way an experienced trust & safety ops lead would handle it.",
+      "version": "0.1.2",
+      "homepage": "https://marketplace.useflair.io/marketplace/agents/a1-labs",
+      "repository": "https://github.com/newbworks/newb-plugins",
+      "license": "MIT",
+      "category": "Customer Support",
+      "tags": [
+        "trust-and-safety",
+        "dispute-resolution",
+        "marketplace-ops",
+        "chargebacks",
+        "customer-support"
+      ]
+    },
+    {
       "name": "missdarcei-demo",
       "source": "./missdarcei-demo-claude",
       "description": "Turn a selfie and beauty inspiration into chat-previewed makeup simulations, annotated placement maps, and a sourced personalized plan.",
@@ -56,6 +73,24 @@
         "accessibility",
         "vercel",
         "github"
+      ]
+    },
+    {
+      "name": "susan-okeefe",
+      "source": "./susan-okeefe-claude",
+      "description": "Blunt, specific MBA application feedback in the HBS Guru method: rate one essay on the Four Levels for free, then get a full-application sanity check, a ding report, or an interview prep brief \u2014 with Susan one escalation away for the call.",
+      "version": "0.1.2",
+      "homepage": "https://marketplace.useflair.io/marketplace/agents/susan-okeefe",
+      "repository": "https://github.com/newbworks/newb-plugins",
+      "license": "MIT",
+      "category": "Education",
+      "tags": [
+        "mba-admissions",
+        "hbs",
+        "stanford-gsb",
+        "wharton",
+        "essays",
+        "interview-prep"
       ]
     },
     {
