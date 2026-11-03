@@ -125,8 +125,9 @@ it:
 
     "newb": { "logo": "assets/logo.png", ... }
 
-Omit `newb.logo` entirely to use the auto-generated initials mark. You can also
-set/replace the logo after publishing on the configure page.
+Omit `newb.logo` entirely to use a generated flair placeholder while you build.
+Before the agent goes live the first time it needs a real image of you: set it
+in the builder's last step ("Listing & go live").
 """
 
 
