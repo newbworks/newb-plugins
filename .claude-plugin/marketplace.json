@@ -40,6 +40,23 @@
       ]
     },
     {
+      "name": "email-lead-scraper",
+      "source": "./email-lead-scraper-claude",
+      "description": "Finds fresh, verified-email leads matching your description every day and adds them to your Google Sheet.",
+      "version": "0.1.1",
+      "homepage": "https://marketplace.useflair.io/marketplace/agents/email-lead-scraper",
+      "repository": "https://github.com/newbworks/newb-plugins",
+      "license": "MIT",
+      "category": "Sales & Marketing",
+      "tags": [
+        "lead-generation",
+        "email-finder",
+        "sales",
+        "google-sheets",
+        "prospecting"
+      ]
+    },
+    {
       "name": "missdarcei-demo",
       "source": "./missdarcei-demo-claude",
       "description": "Turn a selfie and beauty inspiration into chat-previewed makeup simulations, annotated placement maps, and a sourced personalized plan.",

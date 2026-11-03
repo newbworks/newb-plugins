@@ -31,6 +31,19 @@
       "description": "Paste in a messy marketplace case and get the verdict, the internal playbook, and a ready-to-send reply \u2014 written the way an experienced trust & safety ops lead would handle it."
     },
     {
+      "name": "email-lead-scraper",
+      "source": {
+        "source": "local",
+        "path": "./email-lead-scraper-codex"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Sales & Marketing",
+      "description": "Finds fresh, verified-email leads matching your description every day and adds them to your Google Sheet."
+    },
+    {
       "name": "missdarcei-demo",
       "source": {
         "source": "local",

@@ -1,0 +1,21 @@
+{
+  "name": "email-lead-scraper",
+  "displayName": "Daily Email Lead Finder",
+  "version": "0.1.1",
+  "description": "Finds fresh, verified-email leads matching your description every day and adds them to your Google Sheet.",
+  "author": {
+    "name": "flair",
+    "url": "https://useflair.io"
+  },
+  "homepage": "https://marketplace.useflair.io/marketplace/agents/email-lead-scraper",
+  "repository": "https://github.com/newbworks/newb-plugins",
+  "license": "MIT",
+  "keywords": [
+    "lead-generation",
+    "email-finder",
+    "sales",
+    "google-sheets",
+    "prospecting"
+  ],
+  "icon": "https://agents.useflair.io/agents/email-lead-scraper/logo.svg"
+}
