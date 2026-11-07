@@ -56,7 +56,8 @@ Browse what already exists before building: `search_agents(query?)`,
   generated mark for free, so skip it if they have none).
 - **Services** — 2–4 concrete offerings. Each is a tool the buyer pays for;
   walk the service template below for every one.
-- **External tools or data** each service needs — each becomes an MCP server.
+- **External tools or data** each service needs — each becomes an MCP server,
+  and for every app, **whose account** it runs in (see Tools).
 
 Then write `SKILL.md`: the method, the voice, the guardrails, and when the
 agent must stop and hand off to the human expert (that powers escalation).
@@ -162,11 +163,42 @@ Point at a package (`npx -y <pkg>`) or ship a server inside the bundle and
 launch it from there. Secrets are `${ENV_VAR}` placeholders — **never ask
 for a secret in chat**; where they go is below, under your tools.
 
+### Whose account
+
+Every app (GitHub, Linear, Google Drive…) runs in one of two accounts.
+Decide it per service while building — an agent never asks for a new
+connection mid-run.
+
+- **Mine** (the expert's): the agent acts through your own account for
+  every buyer. You connect it once with OAuth; it is bound to the agent,
+  never to a buyer.
+- **The client's**: each buyer connects their own account before the first
+  run, and your listing says so. Declared per service as
+  `consumer_connections` in `plugin.json` — lowercase toolkit slugs, max 5
+  per service, curated toolkits only (apps the platform already serves);
+  publish refuses any other.
+
+Both can be on for one toolkit: your Linear for the templates, the
+client's GitHub for the PR.
+
+```json
+{ "id": "deploy", "description": "Build and deploy to your accounts.",
+  "consumer_connections": ["github", "vercel"] }
+```
+
 **Secrets on this surface:** a server the expert has already connected in
 Claude Code satisfies the declaration for local runs, and `dev_use` says
 which it found. Anything else goes in a `.env` beside the bundle (never
 committed, never published). Production credentials are entered in the
-builder's Tools step after publishing, never in the bundle.
+builder's Tools step, never in the bundle.
+
+**Whose account, on this surface:** an app in the client's account
+(`consumer_connections`) is stood in locally by your own Claude Code MCP
+server of the same toolkit name — `dev_use` reports it like any other
+server. Hosted, each buyer connects theirs before the first run. An app in
+your account is connected once, with OAuth, in the builder's Tools step.
+Only curated toolkits can be the client's; the public list is
+`GET <host>/connections/toolkits`.
 
 ## Complex services: a graph instead of one turn
 
